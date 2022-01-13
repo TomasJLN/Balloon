@@ -8,15 +8,15 @@ const bookingGet = async (req, res, next) => {
     try {
         connection = await getDB();
 
-        const { idBooking } = req.params;
+        const { idBooking: ticketBooking } = req.params;
         const { id: idReqUser } = req.userAuth;
 
         let booking = [];
 
-        if (idBooking) {
+        if (ticketBooking) {
             const [bookingCheck] = await connection.query(
-                `SELECT idUser FROM booking WHERE id = ?`,
-                [idBooking]
+                `SELECT idUser FROM booking WHERE ticket = ?`,
+                [ticketBooking]
             );
 
             if (bookingCheck.length < 1) {
@@ -30,8 +30,8 @@ const bookingGet = async (req, res, next) => {
                 LEFT JOIN booking_experience ON booking.id = booking_experience.idBooking
                 LEFT JOIN experience ON booking.idExperience = experience.id
                 LEFT JOIN user ON booking.idUser = user.id
-                WHERE booking.id = ?`,
-                [idBooking]
+                WHERE booking.ticket = ?`,
+                [ticketBooking]
             );
 
             if (Number(idReqUser) !== Number(bookingCheck[0].idUser)) {

@@ -276,8 +276,8 @@ No tiene
 ### Ver una/s reserva/s del usuario
 
 Reservas -> Ver Reserva
-[GET] http://localhost:4000/booking/view/_idBooking_ || http://localhost:4000/booking/view/
-Visualiza los datos relevantes de una reserva por path-param _idBooking_, en caso de no enviar el id del booking
+[GET] http://localhost:4000/booking/view/_ticketBooking_ || http://localhost:4000/booking/view/
+Visualiza los datos relevantes de una reserva por path-param _ticketBooking_, en caso de no enviar el ticket del booking
 se muestran todas las reservas de dicho usuario.
 Sólo el usuario propietario puede visualizarla/s.
 [Headers]
