@@ -1,0 +1,996 @@
+{
+	"info": {
+		"_postman_id": "008e3b86-2648-40c4-8895-070c0abfbcb7",
+		"name": "Balloon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Categorias",
+			"item": [
+				{
+					"name": "Añadir Categoría",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"Otra más\",\n    \"description\":\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/category",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Categoría",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Acuáticas\",\n    \"description\":\"GlubGlub\",\n    \"active\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/category/5",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"category",
+								"5"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver categoría",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Server}}/category/2",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"category",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Categorías",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Server}}/category",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Categoría",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Server}}/category/5",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"category",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Subir Foto Categoría",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/home/tommy/Desktop/scraping/aladinia_thumbnails/4-paracaidas.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Server}}/category/1/photo",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"category",
+								"1",
+								"photo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Crear Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"userNameHere\",\n    \"surname\": \"surnameHere\",\n    \"email\": \"yourEmailHere\",\n    \"password\": \"123456\",\n    \"passwordRepeat\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/user",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Server}}/user/",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"user",
+								""
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cambiar Password Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user2}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"oldPassword\": \"123456\",\n    \"newPassword\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/user/password",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"user",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recuperar Password Olvidada",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"yourEmailHere\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/user/password/recover",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"user",
+								"password",
+								"recover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Perfil Usuario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user2}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{Server}}/user/",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resetear Password por RecoveryCode",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"recoveryCode\": \"putYourRecoveryCodeHere\",\n    \"newPassword\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/user/password/reset",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"user",
+								"password",
+								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cambiar Foto Perfil Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user2}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Server}}/user/avatar",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"user",
+								"avatar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"tyourEmailHere\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/user/login",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Datos Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user2}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"yourNameHere\",\n    \"surname\":\"surnameHere\",\n    \"password\": \"123456\",\n    \"newPassword\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/user/edit",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"user",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verificar Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Server}}/user/validate/624991a6138097da7a447e0489d8ea",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"user",
+								"validate",
+								"624991a6138097da7a447e0489d8ea"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Experiencias",
+			"item": [
+				{
+					"name": "Crear Experiencia",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idCategory\":\"1\",\n    \"title\":\"OJO AQUI\",\n    \"description\":\"Lorem\",\n    \"price\":\"70\",\n    \"location\":\"Barcelona\",\n    \"coords\":\"42.2379453,-8.7243281\",\n    \"startDate\":\"2021-12-1\",\n    \"endDate\":\"2022-12-5\",\n    \"featured\":\"1\",\n    \"totalPlaces\":\"10\",\n    \"conditions\":\"Blablabla\",\n    \"normatives\":\"Blablabla\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/experience",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"experience"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Subir Foto Experiencia",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/home/tommy/Desktop/scraping/aladinia_thumbnails/3-entradas.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Server}}/experience/4/photo",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"experience",
+								"4",
+								"photo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Experiencia",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Server}}/experience/14",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"experience",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Experiencia",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idCategory\":\"3\",\n    \"title\":\"Test\",\n    \"description\":\"Test\",\n    \"price\":\"79\",\n    \"location\":\"Asturias\",\n    \"coords\":\"4353,2345\",\n    \"startDate\":\"2021-10-15\",\n    \"endDate\":\"2021-12-26\",\n    \"active\":\"1\",\n    \"featured\":\"1\",\n    \"totalPlaces\":\"10\",\n    \"conditions\":\"Ninguna\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/experience/12",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"experience",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Experiencia",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Server}}/experience/2",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"experience",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Experiencias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Server}}/experience/list",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"experience",
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reservas",
+			"item": [
+				{
+					"name": "Crear Reserva",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user2}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"dateExperience\": \"2021-12-13\",\n\"quantity\": \"1\",\n\"idExperience\": \"8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/booking",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar Reserva",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Server}}/booking/ca82c2",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"booking",
+								"ca82c2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Reservas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{admin}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Server}}/booking/list",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"booking",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver Reserva",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user2}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{Server}}/booking/view/1",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"booking",
+								"view",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Opiniones",
+			"item": [
+				{
+					"name": "Enviar Opinión",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{user2}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"description\": \"Mejor de lo esperado\",\n    \"score\": \"4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/review/4",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"review",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Opiniones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Server}}/review?order=Fecha&direction=DESC",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"review"
+							],
+							"query": [
+								{
+									"key": "searchByExp",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "Fecha"
+								},
+								{
+									"key": "direction",
+									"value": "DESC"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Filtros",
+			"item": [
+				{
+					"name": "Filters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Server}}/allFilter?location=ba&order=price&direction=DESC",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"allFilter"
+							],
+							"query": [
+								{
+									"key": "location",
+									"value": "ba"
+								},
+								{
+									"key": "start_price",
+									"value": "20",
+									"disabled": true
+								},
+								{
+									"key": "end_price",
+									"value": "60",
+									"disabled": true
+								},
+								{
+									"key": "start",
+									"value": "2021-12-1",
+									"disabled": true
+								},
+								{
+									"key": "end",
+									"value": "2021-12-31",
+									"disabled": true
+								},
+								{
+									"key": "experience",
+									"value": "ce",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "Av",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "price"
+								},
+								{
+									"key": "direction",
+									"value": "DESC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtro Ocupacion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Server}}/filters/occupied?order=category&direction=DESC",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"filters",
+								"occupied"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "category"
+								},
+								{
+									"key": "direction",
+									"value": "DESC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtro Destacados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Server}}/filters/featured?direction=ASC",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"filters",
+								"featured"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "title",
+									"disabled": true
+								},
+								{
+									"key": "direction",
+									"value": "ASC"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Server",
+			"value": "http://localhost:4000"
+		},
+		{
+			"key": "admin",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQwODU3MTk4LCJleHAiOjE2NDE3MjExOTh9.yQ6a9j-TSv-P6CgUxmIYBqIOAn9PbB4iSkLpCAXvvUs"
+		},
+		{
+			"key": "user2",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE2NDA4NTc0MzgsImV4cCI6MTY0MTcyMTQzOH0.E3pASIftLT0o2qKWDoNr_L3Did2bzS8a-nh-b2cQWaY"
+		}
+	]
+}
