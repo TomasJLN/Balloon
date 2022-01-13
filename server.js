@@ -77,14 +77,7 @@ const {
 const { reviewList, reviewNew } = require('./controllers/reviews');
 
 /** Filter Controller **/
-const {
-    priceFilter,
-    experienceFeatured,
-    filter,
-    locationFilter,
-    allFilters,
-    occupiedFilter,
-} = require('./filters');
+const { experienceFeatured, allFilters, occupiedFilter } = require('./filters');
 
 /** Newsletter controllers **/
 
