@@ -37,10 +37,7 @@ const bookingNew = async (req, res, next) => {
             throw error;
         }
 
-        if (
-            new Date(dateExperience).toLocaleDateString() <
-            new Date().toLocaleDateString()
-        ) {
+        if (new Date(dateExperience) < new Date()) {
             const error = new Error('No puedes reservar para una fecha pasada');
             error.httpStatus = 409;
             throw error;
@@ -183,7 +180,9 @@ const bookingNew = async (req, res, next) => {
         <p>Fecha Experiencia: <strong>${dateExperience}</strong></p>
         <p>Localización: <strong>${experience[0].location}</strong></p>
         <p><a href="https://www.google.es/maps/@${coords},19z" target="_blank" style="color:#ffffff; text-decoration:none" rel="Google Maps"> 🗺️ Google Maps</a></p>
-        <p>Nº de plazas reservadas: <strong>${quantity}</strong> de <strong>${totPlaces}</strong></p>
+        <p>Nº de plazas reservadas: <strong>${quantity}</strong> de <strong>${
+            getPlaces + quantity
+        }</strong> ocupadas de un total de <strong>${totPlaces}</strong> Plazas</p>
         <hr/>
         <p>Entrada/s:</p>`;
         for (const code of arrQR) {

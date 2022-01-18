@@ -750,14 +750,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{Server}}/booking/view/1",
+							"raw": "{{Server}}/booking/view/8f22be",
 							"host": [
 								"{{Server}}"
 							],
 							"path": [
 								"booking",
 								"view",
-								"1"
+								"8f22be"
 							]
 						}
 					},
@@ -844,7 +844,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Server}}/allFilter?location=ba&order=price&direction=DESC",
+							"raw": "{{Server}}/allFilter",
 							"host": [
 								"{{Server}}"
 							],
@@ -854,26 +854,27 @@
 							"query": [
 								{
 									"key": "location",
-									"value": "ba"
-								},
-								{
-									"key": "start_price",
-									"value": "20",
+									"value": "coru",
 									"disabled": true
 								},
 								{
-									"key": "end_price",
+									"key": "start_price",
 									"value": "60",
 									"disabled": true
 								},
 								{
+									"key": "end_price",
+									"value": "160",
+									"disabled": true
+								},
+								{
 									"key": "start",
-									"value": "2021-12-1",
+									"value": "2022-2-1",
 									"disabled": true
 								},
 								{
 									"key": "end",
-									"value": "2021-12-31",
+									"value": "2022-2-31",
 									"disabled": true
 								},
 								{
@@ -888,11 +889,13 @@
 								},
 								{
 									"key": "order",
-									"value": "price"
+									"value": "price",
+									"disabled": true
 								},
 								{
 									"key": "direction",
-									"value": "DESC"
+									"value": "DESC",
+									"disabled": true
 								}
 							]
 						}
@@ -905,7 +908,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Server}}/filters/occupied?order=category&direction=DESC",
+							"raw": "{{Server}}/filters/occupied",
 							"host": [
 								"{{Server}}"
 							],
@@ -915,12 +918,24 @@
 							],
 							"query": [
 								{
+									"key": "experienceID",
+									"value": "8",
+									"disabled": true
+								},
+								{
+									"key": "date",
+									"value": "2022-1-14",
+									"disabled": true
+								},
+								{
 									"key": "order",
-									"value": "category"
+									"value": "occupied",
+									"disabled": true
 								},
 								{
 									"key": "direction",
-									"value": "DESC"
+									"value": "DESC",
+									"disabled": true
 								}
 							]
 						}
@@ -933,7 +948,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Server}}/filters/featured?direction=ASC",
+							"raw": "{{Server}}/filters/featured",
 							"host": [
 								"{{Server}}"
 							],
@@ -949,7 +964,8 @@
 								},
 								{
 									"key": "direction",
-									"value": "ASC"
+									"value": "ASC",
+									"disabled": true
 								}
 							]
 						}
@@ -986,11 +1002,11 @@
 		},
 		{
 			"key": "admin",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQwODU3MTk4LCJleHAiOjE2NDE3MjExOTh9.yQ6a9j-TSv-P6CgUxmIYBqIOAn9PbB4iSkLpCAXvvUs"
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQyMDY0MDk5LCJleHAiOjE2NDI5MjgwOTl9.Fg0FKFZak2okKmtsZnMYwMzo-_ExGJ0iICS8GnHFBv4"
 		},
 		{
 			"key": "user2",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE2NDA4NTc0MzgsImV4cCI6MTY0MTcyMTQzOH0.E3pASIftLT0o2qKWDoNr_L3Did2bzS8a-nh-b2cQWaY"
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE2NDIwNjQyNDEsImV4cCI6MTY0MjkyODI0MX0.Jiq6xC2Qr54c_IEY9ibQQYITET2IoSSYTKgpndS5unY"
 		}
 	]
 }

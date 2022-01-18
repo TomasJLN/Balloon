@@ -15,7 +15,7 @@ en sendgrid, email y contraseña para el usuario Administrador en la aplicación
 
 ### Crear la base de datos, crear las tablas y popular algunos datos de ejemplo
 4. Cuando finalice la instalación de los módulos de node, ejecutamos: 
-``` npm run createDB ```
+``` npm run createDB ``` - introducir password de mysql para el usuario demo (debe existir tal usuario)
 
 5. Ahora ejecutamos en el terminal: 
 ``` npm run db ```

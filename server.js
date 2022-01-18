@@ -16,6 +16,9 @@ const isAuth = require('./middlewares/isAuth');
 const bookingExists = require('./middlewares/bookingExists');
 const canVote = require('./middlewares/canVote');
 const userCheckMail = require('./middlewares/userCheckMail');
+//
+app.use(cors());
+
 // Configurar cabeceras y cors
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -77,14 +80,7 @@ const {
 const { reviewList, reviewNew } = require('./controllers/reviews');
 
 /** Filter Controller **/
-const {
-    priceFilter,
-    experienceFeatured,
-    filter,
-    locationFilter,
-    allFilters,
-    occupiedFilter,
-} = require('./filters');
+const { experienceFeatured, allFilters, occupiedFilter } = require('./filters');
 
 /** Newsletter controllers **/
 

@@ -6,15 +6,9 @@ const occupiedFilter = async (req, res, next) => {
     try {
         connection = await getDB();
 
-        const { order, direction } = req.query;
+        let { date, experienceID, order, direction } = req.query;
 
-        const validOrderOptions = [
-            'category',
-            'title',
-            'Free Places',
-            'price',
-            'location',
-        ];
+        const validOrderOptions = ['category', 'title', 'occupied', 'location'];
         const validDirectionOptions = ['DESC', 'ASC'];
 
         const orderDirection = validDirectionOptions.includes(direction)
@@ -25,21 +19,21 @@ const occupiedFilter = async (req, res, next) => {
 
         const queryOrder = ` ORDER BY ${orderBy} ${orderDirection} `;
 
-        let query = `SELECT category.title AS Category, experience.title, booking_experience.dateExperience AS DATE, (experience.totalPlaces - ifnull(SUM(booking_experience.quantity),0)) 
-            AS 'Free Places', experience.totalPlaces, experience.price, experience.startDate, experience.endDate, experience.location, experience.description
-            FROM booking_experience, experience 
-            LEFT JOIN category ON experience.idCategory = category.id
-            WHERE experience.id = booking_experience.idExperience AND experience.active = 1
-            GROUP BY booking_experience.dateExperience, experience.title, experience.totalPlaces, experience.price, experience.startDate, experience.endDate, experience.location, 
-            experience.description, category.id ${queryOrder}`;
+        let query = `SELECT category.title AS category, experience.title, booking_experience.dateExperience, SUM(booking_experience.quantity) AS occupied, experience.totalPlaces, experience.location FROM experience right join booking_experience ON booking_experience.idExperience = experience.id left join category ON category.id = experience.idCategory WHERE experience.active=1`;
+
+        if (date) query += ` AND booking_experience.dateExperience = '${date}'`;
+
+        if (experienceID) query += ` AND experience.id = ${experienceID}`;
+
+        query += ` GROUP BY booking_experience.dateExperience, experience.title, experience.totalPlaces,experience.location, category.title`;
+
+        query += ` ${queryOrder}`;
 
         const [list] = await connection.query(`${query}`);
 
         res.send({
             status: 'ok',
-            data: {
-                list,
-            },
+            data: list,
         });
     } catch (error) {
         next(error);

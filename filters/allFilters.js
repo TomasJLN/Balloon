@@ -34,9 +34,10 @@ const allFilters = async (req, res, next) => {
             : 'ASC';
 
         start_price = !start_price && end_price ? '1' : start_price;
+        end_price = end_price ? end_price : 10000;
 
-        let query = `SELECT category.title, experience.title, experience.price, experience.startDate,
-         experience.endDate, experience.location, experience.description 
+        let query = `SELECT category.title AS category, experience.title, experience.price, experience.startDate,
+         experience.endDate, experience.location, experience.description, experience.photo 
          FROM experience, category
          WHERE experience.active = 1 AND experience.idCategory = category.id`;
 
@@ -63,12 +64,11 @@ const allFilters = async (req, res, next) => {
         const [list] = await connection.query(`${query}`);
 
         console.log(query);
+        console.log(list);
 
         res.send({
             status: 'ok',
-            data: {
-                list,
-            },
+            data: list,
         });
     } catch (error) {
         next(error);

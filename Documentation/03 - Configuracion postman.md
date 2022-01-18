@@ -276,8 +276,8 @@ No tiene
 ### Ver una/s reserva/s del usuario
 
 Reservas -> Ver Reserva
-[GET] http://localhost:4000/booking/view/_idBooking_ || http://localhost:4000/booking/view/
-Visualiza los datos relevantes de una reserva por path-param _idBooking_, en caso de no enviar el id del booking
+[GET] http://localhost:4000/booking/view/_ticketBooking_ || http://localhost:4000/booking/view/
+Visualiza los datos relevantes de una reserva por path-param _ticketBooking_, en caso de no enviar el ticket del booking
 se muestran todas las reservas de dicho usuario.
 Sólo el usuario propietario puede visualizarla/s.
 [Headers]
@@ -363,18 +363,22 @@ enviados.
 KEY order -> category|experience|price|location|title . Ordena por columna.
 KEY direction -> ASC | DESC. Ordena ascendente o descendentemente.
 
-### Filtar Experiencias con reservas y número de plazas disponibles
+### Filtar Experiencias con reservas y número de plazas ocupadas
 
-Filtros -> Filtrar Experiencias con Reservas y número de plazas disponibles
-[GET] http://localhost:4000/filters/occupied?order=xx&direction=xx
-Listado de las experiencias con reservas activas mostrando el número de plazas disponibles.
+Filtros -> Filtrar Experiencias con Reservas y número de plazas ocupadas
+[GET] http://localhost:4000/filters/occupied?experienceID=xx&date=xxxx-xx-xx&order=xx&direction=xx
+Listado de las experiencias con reservas activas mostrando el número de plazas ocupadas.
+Si no se manda _experienceID_ lista todas las experiencias de ese día, si tampoco se manda _date_ 
+muestra todas las experiencias con plazas ocupadas de todas las experiencias
 [Headers]
 No requiere ningún tipo de autentificación
 [Body]
 No tiene
 [query-params]
 Todos son opcionales
-KEY order -> category|experience|price|location|title . Ordena por columna.
+KEY experienceID -> Lista las experiencias por día con plazas ocupadas de la experiencia en cuestión.
+KEY date -> Lista todas las experiencias con plazas ocupadas en esa fecha.
+KEY order -> category|title|occupied|location. Ordena por columna.
 KEY direction -> ASC | DESC. Ordena ascendente o descendentemente.
 
 ### Filtar Experiencias por Localización
