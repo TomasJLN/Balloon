@@ -21,10 +21,10 @@ const experienceFeatured = async (req, res, next) => {
             : 'ASC';
 
         const query = `SELECT category.title AS category, experience.id, experience.title As title, experience.description, 
-        experience.price, experience.location, experience.startDate, experience.endDate
+        experience.price, experience.location, experience.photo, experience.coords, experience.startDate, experience.endDate
          FROM experience
          LEFT JOIN category ON experience.idCategory = category.id
-        WHERE experience.active = 1 AND experience.featured = 1
+        WHERE experience.active = 1 AND experience.featured = 1 AND now() < experience.endDate
         ORDER BY ${orderBy} ${orderDirection}`;
 
         const [list] = await connection.query(`${query}`);
