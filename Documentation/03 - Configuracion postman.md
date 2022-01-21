@@ -335,7 +335,7 @@ se ordenan de forma ascendente.
 Filtros
 ############################################################################################
 
-### Filtar Experiencias por Fecha Inicio y Fecha Fin
+### Filtar Experiencias
 
 Filters -> Filtrar Experiencias según query-params enviados
 [GET] http://localhost:4000/allFilter?location=xx&start_price=xx&end_price=xx&start=xx
@@ -368,7 +368,7 @@ KEY direction -> ASC | DESC. Ordena ascendente o descendentemente.
 Filtros -> Filtrar Experiencias con Reservas y número de plazas ocupadas
 [GET] http://localhost:4000/filters/occupied?experienceID=xx&date=xxxx-xx-xx&order=xx&direction=xx
 Listado de las experiencias con reservas activas mostrando el número de plazas ocupadas.
-Si no se manda _experienceID_ lista todas las experiencias de ese día, si tampoco se manda _date_ 
+Si no se manda _experienceID_ lista todas las experiencias de ese día, si tampoco se manda _date_
 muestra todas las experiencias con plazas ocupadas de todas las experiencias
 [Headers]
 No requiere ningún tipo de autentificación

@@ -2,6 +2,8 @@
 
 /** Requirements **/
 const getDB = require('../../database/getDB');
+const { validate } = require('../../helpers');
+const { categoryEditSchema } = require('../../validations/categoryEditSchema');
 
 const categoryEdit = async (req, res, next) => {
     let connection;
@@ -13,6 +15,8 @@ const categoryEdit = async (req, res, next) => {
         const { role: roleReqUser } = req.userAuth;
 
         let { title, description, active } = req.body;
+
+        await validate(categoryEditSchema, req.body);
 
         if (roleReqUser !== 'admin') {
             const error = new Error('No tienes privilegios para editar');

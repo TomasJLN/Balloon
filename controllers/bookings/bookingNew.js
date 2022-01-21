@@ -5,6 +5,8 @@ const getDB = require('../../database/getDB');
 const { getRandomString, sendMail } = require('../../helpers');
 const QRCode = require('qrcode');
 const { indexOf } = require('lodash');
+const { validate } = require('../../helpers');
+const { bookingNewSchema } = require('../../validations/bookingNewSchema');
 
 const bookingNew = async (req, res, next) => {
     let connection;
@@ -13,6 +15,9 @@ const bookingNew = async (req, res, next) => {
         connection = await getDB();
 
         let { dateExperience, quantity, idExperience } = req.body;
+
+        await validate(bookingNewSchema, req.body);
+
         quantity = Number(quantity);
         idExperience = Number(idExperience);
 

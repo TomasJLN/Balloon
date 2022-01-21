@@ -2,12 +2,16 @@
 
 /** Requirements **/
 const getDB = require('../../database/getDB');
+const { validate } = require('../../helpers');
+const { categoryNewSchema } = require('../../validations/categoryNewSchema');
 
 const categoryNew = async (req, res, next) => {
     let connection;
     try {
         connection = await getDB();
         const { title, description } = req.body;
+
+        await validate(categoryNewSchema, req.body);
 
         const { id: idReqUser, role: roleReqUser } = req.userAuth;
 

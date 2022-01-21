@@ -2,6 +2,8 @@
 
 /** Requirements **/
 const getDB = require('../../database/getDB');
+const { validate } = require('../../helpers');
+const { reviewNewSchema } = require('../../validations/reviewNewSchema');
 
 const reviewNew = async (req, res, next) => {
     let connection;
@@ -10,6 +12,8 @@ const reviewNew = async (req, res, next) => {
         const { ticketNumber } = req.params;
         const { description, score } = req.body;
         const { id: idReqUser } = req.userAuth;
+
+        await validate(reviewNewSchema, req.body);
 
         const [idBE] = await connection.query(
             `SELECT booking.id FROM booking WHERE booking.ticket = ?`,

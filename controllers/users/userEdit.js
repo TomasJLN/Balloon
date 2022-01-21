@@ -4,6 +4,8 @@
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const getDB = require('../../database/getDB');
+const { validate } = require('../../helpers');
+const { userEditSchema } = require('../../validations/userEditSchema');
 
 const userEdit = async (req, res, next) => {
     let connection;
@@ -16,6 +18,8 @@ const userEdit = async (req, res, next) => {
         console.log(typeof idReqUser);
 
         let { name, surname, password, newPassword } = req.body;
+
+        await validate(userEditSchema, req.body);
 
         const [user] = await connection.query(
             'SELECT id, name, surname, password FROM user WHERE id = ?',

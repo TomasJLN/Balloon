@@ -2,6 +2,10 @@
 
 /** Requirements **/
 const getDB = require('../../database/getDB');
+const { validate } = require('../../helpers');
+const {
+    experienceNewSchema,
+} = require('../../validations/experienceNewSchema');
 
 const experienceNew = async (req, res, next) => {
     let connection;
@@ -21,6 +25,8 @@ const experienceNew = async (req, res, next) => {
             conditions,
             normatives,
         } = req.body;
+
+        await validate(experienceNewSchema, req.body);
 
         const { role: roleReqUser } = req.userAuth;
 
