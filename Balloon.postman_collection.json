@@ -500,7 +500,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"idCategory\":\"1\",\n    \"title\":\"OJO AQUI\",\n    \"description\":\"Lorem\",\n    \"price\":\"70\",\n    \"location\":\"Barcelona\",\n    \"coords\":\"42.2379453,-8.7243281\",\n    \"startDate\":\"2021-12-1\",\n    \"endDate\":\"2022-12-5\",\n    \"featured\":\"1\",\n    \"totalPlaces\":\"10\",\n    \"conditions\":\"Blablabla\",\n    \"normatives\":\"Blablabla\"\n\n}",
+							"raw": "{\n    \"idCategory\":\"3\",\n    \"title\":\"Baños Termales con Aromaterapia y Masaje Relajante para Parejas en AIRE Ancient Baths Barcelona\",\n    \"description\":\"Dejaos llevar por el recorrido que empezará en el agua templada del tepidarium (36º), la caliente del caldarium (40º) y la fría del frigidarium (16º).\",\n    \"price\":\"140\",\n    \"location\":\"Barcelona\",\n    \"coords\":\"41.38713518529984, 2.1840008337481667\",\n    \"startDate\":\"2022-1-2\",\n    \"endDate\":\"2022-6-1\",\n    \"featured\":\"1\",\n    \"totalPlaces\":\"10\",\n    \"conditions\":\"Edad mínima spa: 18 años. Es obligatorio el traje de baño. Se proporciona toalla, calzado especial y elementos de aseo\",\n    \"normatives\":\"AVISO COVID: las condiciones de reservas o disponibilidades pueden variar, consultar en el centro.\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1002,11 +1002,11 @@
 		},
 		{
 			"key": "admin",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQyMDY0MDk5LCJleHAiOjE2NDI5MjgwOTl9.Fg0FKFZak2okKmtsZnMYwMzo-_ExGJ0iICS8GnHFBv4"
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQyNjI3MTYzLCJleHAiOjE2NDM0OTExNjN9.OeHEqjpdxZn_K81fl7BOQ774RfeAxZkNy7rmYQPcHUI"
 		},
 		{
 			"key": "user2",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE2NDIwNjQyNDEsImV4cCI6MTY0MjkyODI0MX0.Jiq6xC2Qr54c_IEY9ibQQYITET2IoSSYTKgpndS5unY"
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE2NDI3MTAzNzcsImV4cCI6MTY0MzU3NDM3N30.T7k-0MAcrnCjvLaJ2mj2-m_upPY9mJ2rkxdcH_2ScSk"
 		}
 	]
 }
