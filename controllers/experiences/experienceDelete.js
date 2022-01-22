@@ -34,7 +34,7 @@ const experienceDelete = async (req, res, next) => {
         if (experience[0].photo) await deletePhoto(experience[0].photo);
 
         await connection.query(
-            `UPDATE experience SET description=NULL, price=0, location='deleted', coords = NULL, photo = NULL, startDate = NULL, endDate = NULL, active = false, featured = false, totalPlaces= 0, conditions = NULL, normatives = NULL, modifiedAt = now() WHERE id = ?`,
+            `UPDATE experience SET title='deleted', description=NULL, price=0, location='deleted', coords = NULL, photo = NULL, startDate = NULL, endDate = NULL, active = false, featured = false, totalPlaces= 0, conditions = NULL, normatives = NULL, modifiedAt = now() WHERE id = ?`,
             [idExperience]
         );
 

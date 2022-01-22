@@ -21,6 +21,7 @@ const userNewSchema = Joi.object().keys({
                     return new Error('Nombre es obligatorio');
             }
         }),
+
     surname: Joi.string()
         .required()
         .min(3)
@@ -41,7 +42,9 @@ const userNewSchema = Joi.object().keys({
                     return new Error('Apellidos son obligatorio');
             }
         }),
+
     email: Joi.string()
+        .email()
         .required()
         .max(100)
         .error((errors) => {
@@ -53,9 +56,12 @@ const userNewSchema = Joi.object().keys({
                         'Email no puede contener más de 100 caracteres'
                     );
                 default:
-                    return new Error('Email no puede quedar vacío');
+                    return new Error(
+                        'Email no puede quedar vacío y debe ser un email válido'
+                    );
             }
         }),
+
     password: Joi.string()
         .required()
         .min(4)
@@ -76,6 +82,9 @@ const userNewSchema = Joi.object().keys({
                     return new Error('Contraseña es obligatoria');
             }
         }),
+
+    passwordRepeat: Joi.ref('password'),
+
     avatar: Joi.string()
         .max(50)
         .error((errors) => {
@@ -90,18 +99,7 @@ const userNewSchema = Joi.object().keys({
                     );
             }
         }),
-    active: Joi.boolean().error((errors) => {
-        switch (errors[0].code) {
-            default:
-                return new Error('active debe ser un booleano');
-        }
-    }),
-    deleted: Joi.boolean().error((errors) => {
-        switch (errors[0].code) {
-            default:
-                return new Error('deleted debe ser un booleano');
-        }
-    }),
+
     recoveryCode: Joi.string()
         .max(150)
         .error((errors) => {
@@ -116,6 +114,7 @@ const userNewSchema = Joi.object().keys({
                     );
             }
         }),
+
     registryCode: Joi.string()
         .max(150)
         .error((errors) => {

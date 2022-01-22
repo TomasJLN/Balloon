@@ -304,7 +304,7 @@ Opiniones
 
 Opiniones -> Crear Opinión
 [POST] http://localhost:4000/review/_ticketNumber_
-Crea una opinión según _ticketNumber_ (booking). Sólo puede existir una opinión por id de 'booking',
+Crea una opinión según _ticketNumber_ (booking). Sólo puede existir una opinión por _ticketNumber_ de 'booking',
 la opinión sólo se puede realizar una vez pasada la fecha de la reserva. La opinión no se puede borrar ni modificar.
 [Headers]
 Requiere autentificación de usuario propietario de la reserva

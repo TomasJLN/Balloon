@@ -64,9 +64,7 @@ const reviewList = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            data: {
-                list,
-            },
+            data: list,
         });
     } catch (error) {
         next(error);
