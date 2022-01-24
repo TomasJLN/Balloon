@@ -4,6 +4,8 @@
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const getDB = require('../../database/getDB');
+const { validate } = require('../../helpers');
+const { userNewSchema } = require('../../validations/userNewSchema');
 
 const { getRandomString, checkEmail } = require('../../helpers');
 
@@ -12,6 +14,8 @@ const userNew = async (req, res, next) => {
     try {
         connection = await getDB();
         const { name, surname, email, password, passwordRepeat } = req.body;
+
+        await validate(userNewSchema, req.body);
 
         if (!name || !surname || !email || !password || !passwordRepeat) {
             const error = new Error('Faltan campos obligatorios');

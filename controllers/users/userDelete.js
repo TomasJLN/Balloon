@@ -27,8 +27,8 @@ const userDelete = async (req, res, next) => {
         if (user[0].avatar) await deletePhoto(user[0].avatar);
 
         await connection.query(
-            `UPDATE user SET active = false, deleted = true, modifiedAt = now() WHERE id = ?`,
-            [idReqUser]
+            `UPDATE user SET email = ?, active = false, deleted = true, modifiedAt = now() WHERE id = ?`,
+            [idReqUser, idReqUser]
         );
 
         res.send({

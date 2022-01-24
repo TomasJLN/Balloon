@@ -8,7 +8,7 @@ const experienceList = async (req, res, next) => {
 
         const query = `SELECT * FROM experience WHERE active = 1 
         && endDate >= now()
-        ORDER BY title ASC`;
+        ORDER BY id DESC`;
 
         const [list] = await connection.query(`${query}`);
 

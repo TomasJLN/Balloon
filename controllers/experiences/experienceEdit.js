@@ -2,6 +2,10 @@
 
 /** Requirements **/
 const getDB = require('../../database/getDB');
+const { validate } = require('../../helpers');
+const {
+    experienceEditSchema,
+} = require('../../validations/experienceEditSchema');
 
 const experienceEdit = async (req, res, next) => {
     let connection;
@@ -27,6 +31,8 @@ const experienceEdit = async (req, res, next) => {
             conditions,
             normatives,
         } = req.body;
+
+        await validate(experienceEditSchema, req.body);
 
         if (roleReqUser !== 'admin') {
             const error = new Error('No tienes privilegios para editar');

@@ -304,7 +304,7 @@ Opiniones
 
 Opiniones -> Crear Opinión
 [POST] http://localhost:4000/review/_ticketNumber_
-Crea una opinión según _ticketNumber_ (booking). Sólo puede existir una opinión por id de 'booking',
+Crea una opinión según _ticketNumber_ (booking). Sólo puede existir una opinión por _ticketNumber_ de 'booking',
 la opinión sólo se puede realizar una vez pasada la fecha de la reserva. La opinión no se puede borrar ni modificar.
 [Headers]
 Requiere autentificación de usuario propietario de la reserva
@@ -335,7 +335,7 @@ se ordenan de forma ascendente.
 Filtros
 ############################################################################################
 
-### Filtar Experiencias por Fecha Inicio y Fecha Fin
+### Filtar Experiencias
 
 Filters -> Filtrar Experiencias según query-params enviados
 [GET] http://localhost:4000/allFilter?location=xx&start_price=xx&end_price=xx&start=xx
@@ -368,7 +368,7 @@ KEY direction -> ASC | DESC. Ordena ascendente o descendentemente.
 Filtros -> Filtrar Experiencias con Reservas y número de plazas ocupadas
 [GET] http://localhost:4000/filters/occupied?experienceID=xx&date=xxxx-xx-xx&order=xx&direction=xx
 Listado de las experiencias con reservas activas mostrando el número de plazas ocupadas.
-Si no se manda _experienceID_ lista todas las experiencias de ese día, si tampoco se manda _date_ 
+Si no se manda _experienceID_ lista todas las experiencias de ese día, si tampoco se manda _date_
 muestra todas las experiencias con plazas ocupadas de todas las experiencias
 [Headers]
 No requiere ningún tipo de autentificación

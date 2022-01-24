@@ -87,6 +87,15 @@ async function checkField(schema, data) {
     }
 }
 
+async function validate(schema, data) {
+    try {
+        await schema.validateAsync(data);
+    } catch (error) {
+        error.httpStatus = 400;
+        throw error;
+    }
+}
+
 module.exports = {
     getRandomString,
     sendMail,
@@ -94,4 +103,5 @@ module.exports = {
     savePhoto,
     deletePhoto,
     checkField,
+    validate,
 };

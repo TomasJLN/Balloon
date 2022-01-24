@@ -31,6 +31,8 @@ const categoryPhotoUpload = async (req, res, next) => {
             [idCategory]
         );
 
+        console.log(category[0].photo);
+
         if (category.length < 1) {
             const error = new Error('No existe la categoría');
             error.httpStatus = 404;
@@ -50,7 +52,7 @@ const categoryPhotoUpload = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Foto de category actualizada',
+            message: 'Foto de categoria actualizada',
         });
     } catch (error) {
         next(error);
