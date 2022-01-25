@@ -973,6 +973,63 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Newsletter",
+			"item": [
+				{
+					"name": "Añadir mail a newsletter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"test@test.org\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/newsletter",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"newsletter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar mail de newsletter",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"test@test.org\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Server}}/newsletter",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"newsletter"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -1002,11 +1059,15 @@
 		},
 		{
 			"key": "admin",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQyNjI3MTYzLCJleHAiOjE2NDM0OTExNjN9.OeHEqjpdxZn_K81fl7BOQ774RfeAxZkNy7rmYQPcHUI"
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQzMDM5OTIwLCJleHAiOjE2NDM5MDM5MjB9.s9xeCQcbtw1RD8MYXvMK7um-Knyv_B839vcZDoj6Fi0"
 		},
 		{
 			"key": "user2",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE2NDI3MTAzNzcsImV4cCI6MTY0MzU3NDM3N30.T7k-0MAcrnCjvLaJ2mj2-m_upPY9mJ2rkxdcH_2ScSk"
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE2NDMxMDY0ODgsImV4cCI6MTY0Mzk3MDQ4OH0.WQc47UGAxpXAq8uxl6I2v4AY_G9YYChbUZ5qrwexy-c"
+		},
+		{
+			"key": "user3",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQyODcxODMyLCJleHAiOjE2NDM3MzU4MzJ9.gdDPROXa2vZr3xVmemW3DMuMNKwntwNuRZ5z5zORfwI"
 		}
 	]
 }
