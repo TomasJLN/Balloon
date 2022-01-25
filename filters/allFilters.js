@@ -33,7 +33,7 @@ const allFilters = async (req, res, next) => {
             ? direction
             : 'ASC';
 
-        start_price = !start_price && end_price ? '1' : start_price;
+        start_price = !start_price && end_price ? 1 : start_price;
         end_price = end_price ? end_price : 10000;
 
         let query = `SELECT category.title AS category, experience.id AS ID, experience.title, experience.price, experience.startDate,
@@ -44,8 +44,10 @@ const allFilters = async (req, res, next) => {
         if (start && end) {
             query += ` AND (('${end}' BETWEEN experience.startDate AND experience.endDate) 
                     OR ('${start}' BETWEEN experience.startDate AND experience.endDate) AND now() < experience.endDate)`;
-        } else {
-            query += ` AND now() < experience.endDate`;
+        } else if (start) {
+            query += ` AND ('${start}' BETWEEN now() AND experience.endDate)`;
+        } else if (end) {
+            query += ` AND ('${end}' BETWEEN now() AND experience.endDate)`;
         }
 
         if (start_price && end_price)
@@ -60,6 +62,8 @@ const allFilters = async (req, res, next) => {
             query += ` AND (category.title like '%${category}%' OR category.description like '%${category}%')`;
 
         query += ` ORDER BY ${orderBy} ${orderDirection}`;
+
+        console.log(query);
 
         const [list] = await connection.query(`${query}`);
 
