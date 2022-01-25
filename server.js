@@ -68,6 +68,7 @@ const { reviewList, reviewNew } = require('./controllers/reviews');
 const { experienceFeatured, allFilters, occupiedFilter } = require('./filters');
 
 /** Newsletter controllers **/
+const { newsletterNew, newsletterDelete } = require('./controllers/newsletter');
 
 /** Global controllers **/
 app.use(morgan('dev'));
@@ -112,6 +113,13 @@ app.get('/booking/list', isAuth, bookingList);
 app.get('/booking/view/:idBooking', isAuth, bookingGet);
 app.get('/booking/view/', isAuth, bookingGet);
 app.delete('/booking/:ticketNumber', isAuth, bookingExists, bookingCancel);
+
+/** Newsletter Endpoints **/
+// app.post('/booking', isAuth, bookingNew);
+app.post('/newsletter', newsletterNew);
+app.delete('/newsletter', newsletterDelete);
+// app.delete('/newsletter', newsletterDelete);
+// app.delete('/booking/:ticketNumber', isAuth, bookingExists, bookingCancel);
 
 /** Review Endpoints **/
 app.post('/review/:ticketNumber', isAuth, bookingExists, canVote, reviewNew);
