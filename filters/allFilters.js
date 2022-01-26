@@ -48,6 +48,8 @@ const allFilters = async (req, res, next) => {
             query += ` AND ('${start}' BETWEEN now() AND experience.endDate)`;
         } else if (end) {
             query += ` AND ('${end}' BETWEEN now() AND experience.endDate)`;
+        } else {
+            query += ` AND (now() < experience.endDate)`;
         }
 
         if (start_price && end_price)

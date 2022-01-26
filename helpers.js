@@ -7,8 +7,13 @@ const path = require('path');
 const uuid = require('uuid');
 const registryMail = require('./templates/registryMail');
 
-const { SENDGRID_API_KEY, SENDGRID_FROM, PUBLIC_HOST, UPLOADS_DIRECTORY } =
-    process.env;
+const { SENDGRID_API_KEY, SENDGRID_FROM, UPLOADS_DIRECTORY } = process.env;
+
+!process.env.SENDGRID_API_KEY
+    ? console.error(
+          '\n-------------------------------------------\nPor favor, configura tu .env para funcionar\n-------------------------------------------\n'
+      )
+    : console.log('Inicializando backend...');
 
 const uploadsDir = path.join(__dirname, UPLOADS_DIRECTORY);
 

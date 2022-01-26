@@ -4,6 +4,7 @@
   "description": "Balloon Experiences",
   "main": "server.js",
   "scripts": {
+    "start": "node app",
     "createDB": "node database/createDB.js",
     "db": "node database/initDB.js",
     "populateData": "node database/populateData.js",
