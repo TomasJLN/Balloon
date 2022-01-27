@@ -33,7 +33,7 @@ const userDelete = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Usuario eliminado de la base de datos',
+            data: 'Usuario eliminado de la base de datos',
         });
     } catch (error) {
         next(error);

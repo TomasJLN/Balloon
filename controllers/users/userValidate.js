@@ -29,7 +29,7 @@ const userValidate = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'El usuario ha sido activado',
+            data: 'El usuario ha sido activado',
         });
     } catch (error) {
         next(error);

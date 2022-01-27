@@ -45,7 +45,7 @@ const categoryDelete = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Categoría eliminada de la base de datos',
+            data: 'Categoría eliminada de la base de datos',
         });
     } catch (error) {
         next(error);

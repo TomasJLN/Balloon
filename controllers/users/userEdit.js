@@ -67,7 +67,7 @@ const userEdit = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Resistro actualizado!',
+            data: 'Resistro actualizado!',
         });
     } catch (error) {
         next(error);

@@ -44,8 +44,7 @@ const userRecoveryPassword = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message:
-                'Se te ha enviado un código de recuperación, comprueba tu email para activar tu cuenta',
+            data: 'Se te ha enviado un código de recuperación, comprueba tu email para activar tu cuenta',
         });
     } catch (error) {
         next(error);

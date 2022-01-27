@@ -49,7 +49,7 @@ const categoryNew = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Categoría creada',
+            data: 'Categoría creada',
         });
     } catch (error) {
         next(error);

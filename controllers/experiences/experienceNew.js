@@ -75,7 +75,7 @@ const experienceNew = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Experiencia creada satisfactoriamente',
+            data: 'Experiencia creada satisfactoriamente',
         });
     } catch (error) {
         next(error);

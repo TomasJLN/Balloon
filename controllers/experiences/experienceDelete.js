@@ -40,7 +40,7 @@ const experienceDelete = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Experiencia eliminada de la base de datos',
+            data: 'Experiencia eliminada de la base de datos',
         });
     } catch (error) {
         next(error);

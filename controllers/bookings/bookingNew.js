@@ -206,7 +206,7 @@ const bookingNew = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Reserva creada',
+            data: 'Reserva creada',
         });
     } catch (error) {
         next(error);

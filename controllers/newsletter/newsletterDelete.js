@@ -35,7 +35,7 @@ const newsletterDelete = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Email eliminado de la Newsletter',
+            data: 'Email eliminado de la Newsletter',
         });
     } catch (error) {
         next(error);

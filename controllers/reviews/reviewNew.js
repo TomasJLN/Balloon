@@ -53,7 +53,7 @@ const reviewNew = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Votación correcta',
+            data: 'Votación correcta',
         });
     } catch (error) {
         next(error);

@@ -46,7 +46,7 @@ const userChangePassword = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Cambio de contraseña realizada satisfactoriamente.',
+            data: 'Cambio de contraseña realizada satisfactoriamente.',
         });
     } catch (error) {
         next(error);

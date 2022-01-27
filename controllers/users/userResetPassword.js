@@ -41,7 +41,7 @@ const userResetPassword = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Código de registro correcto. Contraseña actualizada',
+            data: 'Código de registro correcto. Contraseña actualizada',
         });
     } catch (error) {
         next(error);

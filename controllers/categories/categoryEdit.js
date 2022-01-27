@@ -48,7 +48,7 @@ const categoryEdit = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Categoría actualizada!',
+            data: 'Categoría actualizada!',
         });
     } catch (error) {
         next(error);

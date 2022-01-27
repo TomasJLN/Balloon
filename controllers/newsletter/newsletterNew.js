@@ -45,7 +45,7 @@ const newsletterNew = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Email añadido a la Newsletter',
+            data: 'Email añadido a la Newsletter',
         });
     } catch (error) {
         next(error);

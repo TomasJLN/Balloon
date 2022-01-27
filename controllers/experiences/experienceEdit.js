@@ -100,7 +100,7 @@ const experienceEdit = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Experiencia actualizada!',
+            data: 'Experiencia actualizada!',
         });
     } catch (error) {
         next(error);

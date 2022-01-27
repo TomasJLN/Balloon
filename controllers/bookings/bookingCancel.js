@@ -108,7 +108,7 @@ const bookingCancel = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Reserva Cancelada',
+            data: 'Reserva Cancelada',
         });
     } catch (error) {
         next(error);
