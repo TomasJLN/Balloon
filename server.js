@@ -103,7 +103,7 @@ app.get('/experience/featured', experienceFeatured);
 app.put('/experience/:idExperience/photo', isAuth, experiencePhotoUpload);
 app.delete('/experience/:idExperience', isAuth, experienceDelete);
 app.put('/experience/:idExperience', isAuth, experienceEdit);
-app.get('/experience/:idExperience', isAuth, experienceGet);
+app.get('/experience/:idExperience', experienceGet);
 // app.get('/experience/price/filter', priceFilter);
 
 /** Booking Endpoints **/

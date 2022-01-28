@@ -11,13 +11,13 @@ const experienceGet = async (req, res, next) => {
         /*Aquí destructuring de los parámetros necesarios que trae el body */
         const { idExperience } = req.params;
 
-        const { role: roleReqUser } = req.userAuth;
+        // const { role: roleReqUser } = req.userAuth;
 
-        if (roleReqUser !== 'admin') {
-            const error = new Error('No tienes privilegios para crear');
-            error.httpStatus = 401;
-            throw error;
-        }
+        // if (roleReqUser !== 'admin') {
+        //     const error = new Error('No tienes privilegios para crear');
+        //     error.httpStatus = 401;
+        //     throw error;
+        // }
 
         const [experience] = await connection.query(
             `SELECT idCategory, title, description, price, location, coords, photo, startDate, endDate, active, featured, totalPlaces, conditions, normatives FROM experience WHERE id = ?`,
