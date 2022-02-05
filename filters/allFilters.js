@@ -16,6 +16,7 @@ const allFilters = async (req, res, next) => {
             category,
             order,
             direction,
+            featured,
         } = req.query;
 
         const validOrderOptions = [
@@ -37,7 +38,7 @@ const allFilters = async (req, res, next) => {
         end_price = end_price ? end_price : 10000;
 
         let query = `SELECT category.title AS category, experience.id AS ID, experience.title, experience.price, experience.startDate,
-         experience.endDate, experience.location, experience.coords, experience.description, experience.photo 
+         experience.endDate, experience.location, experience.coords, experience.description, experience.photo, experience.featured 
          FROM experience, category
          WHERE experience.active = 1 AND experience.idCategory = category.id`;
 
@@ -62,6 +63,8 @@ const allFilters = async (req, res, next) => {
 
         if (category)
             query += ` AND (category.title like '%${category}%' OR category.description like '%${category}%')`;
+
+        if (featured === '1') query += ` AND experience.featured = '1'`;
 
         query += ` ORDER BY ${orderBy} ${orderDirection}`;
 

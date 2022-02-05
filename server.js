@@ -65,7 +65,12 @@ const {
 const { reviewList, reviewNew } = require('./controllers/reviews');
 
 /** Filter Controller **/
-const { experienceFeatured, allFilters, occupiedFilter } = require('./filters');
+const {
+    experienceFeatured,
+    allFilters,
+    occupiedFilter,
+    categoriesFilter,
+} = require('./filters');
 
 /** Newsletter controllers **/
 const { newsletterNew, newsletterDelete } = require('./controllers/newsletter');
@@ -128,6 +133,7 @@ app.post('/review/:ticketNumber', isAuth, bookingExists, canVote, reviewNew);
 app.get('/allFilter', allFilters);
 app.get('/filters/occupied', occupiedFilter);
 app.get('/filters/featured', experienceFeatured);
+app.get('/filters/categories', categoriesFilter);
 
 /** Error Middleware **/
 app.use((error, req, res, next) => {
