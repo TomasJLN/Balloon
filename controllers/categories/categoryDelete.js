@@ -38,10 +38,9 @@ const categoryDelete = async (req, res, next) => {
 
         if (category[0].photo) await deletePhoto(category[0].photo);
 
-        await connection.query(
-            `UPDATE category SET title = ?, description='deleted', active = false WHERE id = ?`,
-            [idCategory, idCategory]
-        );
+        await connection.query(`DELETE FROM category WHERE id = ?`, [
+            idCategory,
+        ]);
 
         res.send({
             status: 'ok',
