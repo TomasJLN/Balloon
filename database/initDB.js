@@ -94,8 +94,8 @@ async function initializeDB() {
             dateExperience DATETIME NOT NULL,
             quantity TINYINT UNSIGNED NOT NULL DEFAULT 1,
             totalPrice DECIMAL(6,2) NOT NULL,
-            idBooking INT UNSIGNED NOT NULL, FOREIGN KEY (idBooking) REFERENCES booking(id) ON UPDATE CASCADE,
-            idExperience INT UNSIGNED NOT NULL, FOREIGN KEY (idExperience) REFERENCES experience(id) ON UPDATE CASCADE,
+            idBooking INT UNSIGNED NOT NULL, FOREIGN KEY (idBooking) REFERENCES booking(id) ON UPDATE CASCADE ON DELETE CASCADE,
+            idExperience INT UNSIGNED NOT NULL, FOREIGN KEY (idExperience) REFERENCES experience(id) ON UPDATE CASCADE ON DELETE CASCADE,
             idUser INT UNSIGNED NOT NULL, FOREIGN KEY (idUser) REFERENCES booking(idUser) ON UPDATE CASCADE ON DELETE CASCADE
             );
         `);

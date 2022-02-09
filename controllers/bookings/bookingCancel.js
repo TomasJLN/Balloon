@@ -72,11 +72,11 @@ const bookingCancel = async (req, res, next) => {
             if (qr.qrPicture) await deletePhoto(qr.qrPicture);
         }
 
+        await connection.query(`DELETE FROM booking_experience WHERE id = ?`, [
+            idBE,
+        ]);
+        console.log(`DELETE FROM booking_experience WHERE idBooking = ${idBE}`);
         await connection.query(`DELETE FROM qr WHERE idBooking = ?`, [idBE]);
-        await connection.query(
-            `DELETE FROM booking_experience WHERE idBooking = ?`,
-            [idBE]
-        );
         await connection.query(`DELETE FROM booking WHERE id = ?`, [idBE]);
 
         let bodyText = `

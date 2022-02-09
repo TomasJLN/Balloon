@@ -29,7 +29,6 @@ const categoryDelete = async (req, res, next) => {
             throw error;
         }
 
-        console.log(category[0].active);
         if (category[0].active !== 1) {
             const error = new Error('La categoría está desactiva');
             error.httpStatus = 401;

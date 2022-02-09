@@ -53,7 +53,7 @@ const bookingGet = async (req, res, next) => {
                 `SELECT b.id, b.idExperience, b.idUser, b.ticket, b.expired, b.createdAt, be.dateExperience, e.title, e.description, e.location, e.photo from booking AS b
                 LEFT JOIN booking_experience as be ON b.id = be.idBooking
                 LEFT JOIN experience as e ON e.id = b.idExperience
-                WHERE booking.idUser = ?`,
+                WHERE b.idUser = ?`,
                 [Number(idReqUser)]
             );
         }
