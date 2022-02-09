@@ -59,6 +59,7 @@ const {
     bookingCancel,
     bookingList,
     bookingGet,
+    bookingGetQR,
 } = require('./controllers/bookings');
 
 /** ReviewNew **/
@@ -116,6 +117,7 @@ app.post('/booking', isAuth, bookingNew);
 app.get('/review', reviewList);
 app.get('/booking/list', isAuth, bookingList);
 app.get('/booking/view/:idBooking', isAuth, bookingGet);
+app.get('/booking/view/qr/:idBooking', isAuth, bookingGetQR);
 app.get('/booking/view/', isAuth, bookingGet);
 app.delete('/booking/:ticketNumber', isAuth, bookingExists, bookingCancel);
 
