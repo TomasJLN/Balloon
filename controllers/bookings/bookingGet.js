@@ -50,10 +50,9 @@ const bookingGet = async (req, res, next) => {
             }
         } else {
             [booking] = await connection.query(
-                `SELECT experience.title, user.name, booking.ticket, booking_experience.dateExperience, booking_experience.quantity, booking_experience.totalPrice FROM booking 
-                LEFT JOIN booking_experience ON booking.id = booking_experience.idBooking
-                LEFT JOIN experience ON booking.idExperience = experience.id
-                LEFT JOIN user ON booking.idUser = user.id
+                `SELECT b.id, b.idExperience, b.idUser, b.ticket, b.expired, b.createdAt, be.dateExperience, e.title, e.description, e.location, e.photo from booking AS b
+                LEFT JOIN booking_experience as be ON b.id = be.idBooking
+                LEFT JOIN experience as e ON e.id = b.idExperience
                 WHERE booking.idUser = ?`,
                 [Number(idReqUser)]
             );
