@@ -56,7 +56,7 @@ const userNew = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            data: 'Resistro completado, comprueba tu email para activar tu cuenta',
+            data: 'Registro completado, comprueba tu email para activar tu cuenta',
         });
     } catch (error) {
         next(error);
