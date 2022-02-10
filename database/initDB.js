@@ -95,32 +95,32 @@ async function initializeDB() {
             quantity TINYINT UNSIGNED NOT NULL DEFAULT 1,
             totalPrice DECIMAL(6,2) NOT NULL,
             idBooking INT UNSIGNED NOT NULL, FOREIGN KEY (idBooking) REFERENCES booking(id) ON UPDATE CASCADE ON DELETE CASCADE,
-            idExperience INT UNSIGNED NOT NULL, FOREIGN KEY (idExperience) REFERENCES experience(id) ON UPDATE CASCADE ON DELETE CASCADE,
-            idUser INT UNSIGNED NOT NULL, FOREIGN KEY (idUser) REFERENCES booking(idUser) ON UPDATE CASCADE ON DELETE CASCADE
+            idExperience INT UNSIGNED NOT NULL,
+            idUser INT UNSIGNED NOT NULL
             );
-        `);
-
-        //Create table review
-        await connection.query(`
-        CREATE TABLE IF NOT EXISTS review (
-            id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-            idBookingExperience INT UNSIGNED NOT NULL, FOREIGN KEY (idBookingExperience) REFERENCES booking_experience(idBooking) ON UPDATE CASCADE,
-            description VARCHAR(255),
-            score TINYINT UNSIGNED NOT NULL DEFAULT 5,
-            voted BOOLEAN NOT NULL DEFAULT false,
-            createdAt DATETIME NOT NULL DEFAULT now()
-            );
-        `);
+            `);
 
         //Create table qr
         await connection.query(`
-        CREATE TABLE IF NOT EXISTS qr (
-            id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-            idBooking INT UNSIGNED NOT NULL, FOREIGN KEY (idBooking) REFERENCES booking(id) ON UPDATE CASCADE ON DELETE CASCADE,
-            qrPicture VARCHAR(50) NOT NULL,
-            createdAt DATETIME NOT NULL DEFAULT now()
-            );
-        `);
+            CREATE TABLE IF NOT EXISTS qr (
+                id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                idBooking INT UNSIGNED NOT NULL, FOREIGN KEY (idBooking) REFERENCES booking(id) ON UPDATE CASCADE ON DELETE CASCADE,
+                qrPicture VARCHAR(50) NOT NULL,
+                createdAt DATETIME NOT NULL DEFAULT now()
+                );
+                `);
+
+        //Create table review
+        await connection.query(`
+                  CREATE TABLE IF NOT EXISTS review (
+                      id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                      idBookingExperience INT UNSIGNED NOT NULL, FOREIGN KEY (idBookingExperience) REFERENCES booking_experience(idBooking) ON UPDATE CASCADE ON DELETE CASCADE,
+                      description VARCHAR(255),
+                      score TINYINT UNSIGNED NOT NULL DEFAULT 5,
+                      voted BOOLEAN NOT NULL DEFAULT false,
+                      createdAt DATETIME NOT NULL DEFAULT now()
+                      );
+                      `);
 
         //Create table newsletter
         await connection.query(`

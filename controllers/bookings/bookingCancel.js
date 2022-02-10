@@ -14,6 +14,8 @@ const bookingCancel = async (req, res, next) => {
         const { ticketNumber } = req.params;
         const { id: idReqUser } = req.userAuth;
 
+        console.log(req.params);
+
         const [data] = await connection.query(
             `
             SELECT booking.id, booking.idUser AS idUser, booking.ticket AS ticket, qr.qrPicture, booking_experience.dateExperience AS dateExperience,
@@ -72,11 +74,12 @@ const bookingCancel = async (req, res, next) => {
             if (qr.qrPicture) await deletePhoto(qr.qrPicture);
         }
 
-        await connection.query(`DELETE FROM booking_experience WHERE id = ?`, [
-            idBE,
-        ]);
-        console.log(`DELETE FROM booking_experience WHERE idBooking = ${idBE}`);
-        await connection.query(`DELETE FROM qr WHERE idBooking = ?`, [idBE]);
+        // await connection.query(`DELETE FROM qr WHERE idBooking = ?`, [idBE]);
+
+        // await connection.query(
+        //     `DELETE FROM booking_experience WHERE idBooking = ?`,
+        //     [idBE]
+        // );
         await connection.query(`DELETE FROM booking WHERE id = ?`, [idBE]);
 
         let bodyText = `
