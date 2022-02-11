@@ -36,7 +36,7 @@ const userChangeAvatar = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            data: 'Avatar del usuario actualizado',
+            data: avatarName,
         });
     } catch (error) {
         next(error);
