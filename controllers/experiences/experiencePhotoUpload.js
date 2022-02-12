@@ -50,7 +50,7 @@ const experiencePhotoUpload = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            data: 'Foto de experiencia actualizada',
+            data: photoName,
         });
     } catch (error) {
         next(error);
