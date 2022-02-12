@@ -52,7 +52,7 @@ const categoryPhotoUpload = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            data: 'Foto de categoria actualizada',
+            data: photoName,
         });
     } catch (error) {
         next(error);
