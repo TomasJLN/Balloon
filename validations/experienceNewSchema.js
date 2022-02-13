@@ -103,6 +103,7 @@ const experienceNewSchema = Joi.object()
                 }
             }),
         conditions: Joi.string()
+            .min(0)
             .max(255)
             .error((errors) => {
                 switch (errors[0].code) {
@@ -117,6 +118,7 @@ const experienceNewSchema = Joi.object()
                 }
             }),
         normatives: Joi.string()
+            .min(0)
             .max(255)
             .error((errors) => {
                 switch (errors[0].code) {

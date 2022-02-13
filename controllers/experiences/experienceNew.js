@@ -73,9 +73,15 @@ const experienceNew = async (req, res, next) => {
             ]
         );
 
+        //
+        const [idExp] = await connection.query(
+            'SELECT id FROM experience WHERE title = ?',
+            [title]
+        );
+
         res.send({
             status: 'ok',
-            data: 'Experiencia creada satisfactoriamente',
+            data: idExp[0].id,
         });
     } catch (error) {
         next(error);
