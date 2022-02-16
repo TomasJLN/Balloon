@@ -20,7 +20,7 @@ const experienceGet = async (req, res, next) => {
         // }
 
         const [experience] = await connection.query(
-            `SELECT idCategory, title, description, price, location, coords, photo, startDate, endDate, active, featured, totalPlaces, conditions, normatives FROM experience WHERE id = ?`,
+            `SELECT id, idCategory, title, description, price, location, coords, photo, startDate, endDate, active, featured, totalPlaces, conditions, normatives FROM experience WHERE id = ?`,
             [idExperience]
         );
 

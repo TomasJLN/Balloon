@@ -63,7 +63,7 @@ const {
 } = require('./controllers/bookings');
 
 /** ReviewNew **/
-const { reviewList, reviewNew } = require('./controllers/reviews');
+const { reviewList, reviewNew, reviewGet } = require('./controllers/reviews');
 
 /** Filter Controller **/
 const {
@@ -114,7 +114,6 @@ app.get('/experience/:idExperience', experienceGet);
 
 /** Booking Endpoints **/
 app.post('/booking', isAuth, bookingNew);
-app.get('/review', reviewList);
 app.get('/booking/list', isAuth, bookingList);
 app.get('/booking/view/:idBooking', isAuth, bookingGet);
 app.get('/booking/view/qr/:idBooking', isAuth, bookingGetQR);
@@ -130,6 +129,8 @@ app.delete('/newsletter', newsletterDelete);
 
 /** Review Endpoints **/
 app.post('/review/:ticketNumber', isAuth, bookingExists, canVote, reviewNew);
+app.get('/review', reviewList);
+app.get('/ratingExp', reviewGet);
 
 /** Filters Endpoints **/
 app.get('/allFilter', allFilters);

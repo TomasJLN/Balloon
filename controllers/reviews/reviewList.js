@@ -9,16 +9,16 @@ const reviewList = async (req, res, next) => {
         const { searchByExp, order, direction } = req.query;
 
         const validOrderOptions = [
-            'Experiencia',
-            'Puntuacion',
-            'Fecha',
-            'Usuario',
-            'Categoria',
+            'experience',
+            'score',
+            'date',
+            'user',
+            'category',
         ];
 
         const validDirectionOptions = ['DESC', 'ASC'];
 
-        const orderBy = validOrderOptions.includes(order) ? order : 'Fecha';
+        const orderBy = validOrderOptions.includes(order) ? order : 'date';
 
         const orderDirection = validDirectionOptions.includes(direction)
             ? direction
@@ -29,8 +29,8 @@ const reviewList = async (req, res, next) => {
         if (searchByExp) {
             [list] = await connection.query(
                 `
-                SELECT experience.title AS Experiencia, review.description, review.score AS Puntuacion, 
-                review.createdAt AS Fecha, user.name AS Usuario, category.title AS Categoria FROM review 
+                SELECT experience.id, experience.title AS experience, review.description, review.score AS score, 
+                review.createdAt AS date, user.name AS user, category.title AS category FROM review 
                 LEFT JOIN booking_experience ON review.idBookingExperience = booking_experience.id 
                 LEFT JOIN experience ON booking_experience.idExperience = experience.id 
                 LEFT JOIN user ON booking_experience.idUser = user.id 
@@ -43,8 +43,8 @@ const reviewList = async (req, res, next) => {
         } else {
             [list] = await connection.query(
                 `
-                SELECT experience.title AS Experiencia, review.description, review.score AS Puntuacion, 
-                review.createdAt AS Fecha, user.name AS Usuario, category.title AS Categoria FROM review 
+                SELECT experience.id, experience.title AS experience, review.description, review.score AS score, 
+                review.createdAt AS date, user.name AS user, category.title AS category FROM review 
                 LEFT JOIN booking_experience ON review.idBookingExperience = booking_experience.id 
                 LEFT JOIN experience ON booking_experience.idExperience = experience.id 
                 LEFT JOIN user ON booking_experience.idUser = user.id 
@@ -59,7 +59,7 @@ const reviewList = async (req, res, next) => {
                 'No existe ninguna opinión sobre esa experiencia'
             );
             error.httpStatus = 404;
-            throw error;
+            // throw error;
         }
 
         res.send({

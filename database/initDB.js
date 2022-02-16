@@ -116,7 +116,7 @@ async function initializeDB() {
                       id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                       idBookingExperience INT UNSIGNED NOT NULL, FOREIGN KEY (idBookingExperience) REFERENCES booking_experience(idBooking) ON UPDATE CASCADE ON DELETE CASCADE,
                       description VARCHAR(255),
-                      score TINYINT UNSIGNED NOT NULL DEFAULT 5,
+                      score TINYINT UNSIGNED NOT NULL DEFAULT 60,
                       voted BOOLEAN NOT NULL DEFAULT false,
                       createdAt DATETIME NOT NULL DEFAULT now()
                       );
