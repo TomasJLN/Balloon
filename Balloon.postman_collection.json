@@ -591,7 +591,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"idCategory\":\"3\",\n    \"title\":\"Test\",\n    \"description\":\"Test\",\n    \"price\":\"79\",\n    \"location\":\"Asturias\",\n    \"coords\":\"4353,2345\",\n    \"startDate\":\"2021-10-15\",\n    \"endDate\":\"2021-12-26\",\n    \"active\":\"1\",\n    \"featured\":\"1\",\n    \"totalPlaces\":\"10\",\n    \"conditions\":\"Ninguna\"\n}",
+							"raw": "{\n    \"idCategory\":\"3\",\n    \"title\":\"Test\",\n    \"description\":\"Test\",\n    \"price\":\"79\",\n    \"location\":\"Asturias\",\n    \"coords\":\"4353,2345\",\n    \"startDate\":\"2021-10-15\",\n    \"endDate\":\"2021-12-26\",\n    \"active\":\"1\",\n    \"featured\":\"1\",\n    \"totalPlaces\":\"10\",\n    \"conditions\":\"Ninguna\",\n    \"normatives\": \"N/A\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -789,13 +789,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{Server}}/review/4",
+							"raw": "{{Server}}/review/f74fff",
 							"host": [
 								"{{Server}}"
 							],
 							"path": [
 								"review",
-								"4"
+								"f74fff"
 							]
 						}
 					},
@@ -807,7 +807,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Server}}/review?order=Fecha&direction=DESC",
+							"raw": "{{Server}}/review?searchByExp=9",
 							"host": [
 								"{{Server}}"
 							],
@@ -816,17 +816,41 @@
 							],
 							"query": [
 								{
-									"key": "searchByExp",
-									"value": "1",
+									"key": "order",
+									"value": "Fecha",
 									"disabled": true
 								},
 								{
-									"key": "order",
-									"value": "Fecha"
+									"key": "direction",
+									"value": "DESC",
+									"disabled": true
 								},
 								{
-									"key": "direction",
-									"value": "DESC"
+									"key": "searchByExp",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Opinion x ticket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Server}}/ratingExp?ticket=f74fff",
+							"host": [
+								"{{Server}}"
+							],
+							"path": [
+								"ratingExp"
+							],
+							"query": [
+								{
+									"key": "ticket",
+									"value": "f74fff"
 								}
 							]
 						}
@@ -844,7 +868,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Server}}/allFilter",
+							"raw": "{{Server}}/allFilter?featured=1",
 							"host": [
 								"{{Server}}"
 							],
@@ -896,6 +920,10 @@
 									"key": "direction",
 									"value": "DESC",
 									"disabled": true
+								},
+								{
+									"key": "featured",
+									"value": "1"
 								}
 							]
 						}
@@ -969,6 +997,14 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
@@ -1059,11 +1095,11 @@
 		},
 		{
 			"key": "admin",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQzMDM5OTIwLCJleHAiOjE2NDM5MDM5MjB9.s9xeCQcbtw1RD8MYXvMK7um-Knyv_B839vcZDoj6Fi0"
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQzOTkwODY2LCJleHAiOjE2NDQ4NTQ4NjZ9.XBCEGQMUzcLR2hUxl9klQAgI2fVaIWbVkobcQnOFpRY"
 		},
 		{
 			"key": "user2",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE2NDMxMDY0ODgsImV4cCI6MTY0Mzk3MDQ4OH0.WQc47UGAxpXAq8uxl6I2v4AY_G9YYChbUZ5qrwexy-c"
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ0NTE2MTkxLCJleHAiOjE2NDUzODAxOTF9.buuu_MXTkOUGcqZkclEDxVdxNb92TN2HbcZMelx-stM"
 		},
 		{
 			"key": "user3",
