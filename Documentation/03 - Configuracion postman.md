@@ -1,6 +1,6 @@
 ## Configuración del postman para peticiones
 
-Con el servidor iniciado. Carpeta pricnipal del backend
+Con el servidor iniciado. Carpeta principal del backend
 `npm run dev `
 
 ############################################################################################
@@ -17,6 +17,10 @@ No requiere token de autorización.
 Modificar los datos de la pestaña _Body_ para poder crer un usuario.
 Todos los campos son obligatorios.
 Revisar email, ojo por si está en spam, pulsar en la _imagen_ para activar la cuenta.
+[Response] Object -> {
+status: "ok", data:"Registro completado, comprueba tu email para activar tu cuenta"
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Login de usuario
 
@@ -28,6 +32,10 @@ No requiere token de autorización.
 Necesario para conseguir el token del usuario. Cumplimentar los campos 'email' y 'password'
 Si son correctos, nos devuelve el valor del token del usuario que podemos
 almacenarlo en una variable de postman para usar en las posteriores peticiones.
+[Response] Object ->{
+status: "ok", data: token asignado al usuario con ese mail
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Cambiar contraseña de usuario
 
@@ -39,6 +47,10 @@ token.
 [Body] raw - JSON
 Introducir la contraseña actual en variable _oldPassword_
 Introducir nueva contraseña en variable _newPassword_
+[Response] Object ->{
+status: "ok", data: "Cambio de contraseña realizada satisfactoriamente"
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Actualizar Avatar de usuario
 
@@ -49,6 +61,10 @@ Authorization -> tokenUsuario. Se permite crear/modificar el avatar en el usuari
 token.
 [Body] form-data, KEY -> avatar
 Se envía como form-data, KEY debe ser de tipo 'file', 'Select Files' seleccionar la foto.
+[Response] Object ->{
+status: "ok", data: _nombre-de-la-imagen-en-disco-duro_
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Actualizar Datos del usuario
 
@@ -61,6 +77,10 @@ Cumplimentar los datos a actualizar, se puede enviar name, surname y password (p
 requiere de un segundo campo llamado newPassword para poder actualizar la contraseña).
 Se puede enviar uno o más campos a actualizar.
 La contraseña debe concordar con la que hay en la base de datos antes de poder actualizarla.
+[Response] Object ->{
+status: "ok", data: "Registro actualizado"
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Visualizar Perfil del usuario
 
@@ -71,6 +91,10 @@ Authorization -> tokenUsuario. Permite ver el perfil del usuario con dicho token
 [Body]
 No requiere Body ninguno.
 Visualiza todos los datos del usuario, sólo el propio usuario puede visualizar su perfil.
+[Response] Object ->{
+status: "ok", data: Object con propiedades: { name, surname, email, avatar, role, createdAt, modifiedAt}
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Recuperar contraseña olvidada
 
@@ -83,6 +107,10 @@ Es necesario que el 'email' figure en la base de datos, sino da error de 'usuari
 "email en el body es obligatorio de cumplimentar"
 Introducir email del usuario para recuperar contraseña, se le envía un email con un código de recuperación
 que debe copiar y utilizar en la sección _Resetear Password por RecoveryCode_
+[Response] Object ->{
+status: "ok", data: "Se te ha enviado un código de recuperación, comprueba tu email para activar tu cuenta"
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Resetear Password por RecoveryCode
 
@@ -97,15 +125,24 @@ Introducir el _Código de Recuperación_ enviado al email del usuario, también 
 contraseña.
 Si el _Código de recuperación_ existe en la base de datos, actualizará la contraseña para ese usuario con ese
 _Código de Recuperación_
+[Response] Object ->{
+status: "ok", data: "Código de registro correcto. Contraseña actualizada"
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Verificar Email
 
 Usuarios -> Verificar Email
-[GET] http://localhost:4000/user/validate/_codigoderecuperacion_
+[GET] http://localhost:4000/user/validate/_codigoderegistro_
 [Headers]
-No requiere token de autentificación
+No requiere token de autentificación. OJO, código de registro no código de recuperación.
 [Body]
 No requiere body ninguno.
+[Response] Object ->{
+status: "ok", data: "El usuario ha sido activado"
+status: "error", message: Descripción del error -> _error_
+}
+
 
 ############################################################################################
 Categorías
@@ -121,6 +158,10 @@ Requiere autentificación de*Administrador*
 Introducir el 'title' (obligatorio) y 'description' (opcional)
 Modificar los datos de la pestaña _body_ para poder crear una nueva categoría. El 'title' de la categoría no puede existir
 en la base de datos. Sólo el administrador puede crear categorías
+[Response] Object ->{
+status: "ok", data: "Categoría creada"
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Editar una categoría
 
@@ -130,6 +171,10 @@ Categorías -> Editar Categoría
 Requiere autentificación de _Administrador_
 [Body] raw - JSON
 Introducir uno o más campos: 'title', 'description', 'active'
+[Response] Object ->{
+status: "ok", data: "Categoría actualizada!"
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Ver datos de una categoría
 
@@ -141,6 +186,10 @@ Se puede visualizar categorías desactivadas.
 Requiere autentificación de _Administrador_
 [Body]
 No tiene
+[Response] Object ->{
+status: "ok", data: Object con propiedades: { id, title, description, photo, active, createdAt}
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Listar categorías
 
@@ -151,6 +200,10 @@ Lista todas las categorías 'activas' existentes. Si no existe ninguna categorí
 No requiere ningún tipo de autentificación
 [Body]
 No tiene
+[Response] Object ->{
+status: "ok", data: Array de Object con propiedades: { id, title, description, photo, active, createdAt}
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Borrar una categoría
 
@@ -163,6 +216,10 @@ lanza un error
 Requiere autentificación de _Administrador_
 [Body]
 No tiene
+[Response] Object ->{
+status: "ok", data: "Categoría eliminada de la base de datos"
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Actualizar foto categoría
 
@@ -175,6 +232,10 @@ Requiere autentificación de _Administrador_
 Key -> photo
 Se envía como form-data, key debe ser de tipo 'file', 'Select Files' seleccionar la foto.
 Si el token corresponde a un administrador responde con mensaje de ok.
+[Response] Object ->{
+status: "ok", data: nombre-de-la-imagen-en-disco-duro
+status: "error", message: Descripción del error -> _error_
+}
 
 ############################################################################################
 Experiencias
@@ -190,6 +251,10 @@ Requiere autentificación de _Administrador_
 Key (Obligatorias) -> idCategory, title, price, location, startDate, endDate, totalPlaces.
 Key (Opcionales) -> description, coords, active (default true), featured (default false), conditions, normatives.
 Cumplimentar los datos necesarios para crear una nueva experiencia
+[Response] Object ->{
+status: "ok", data: id-de-la-nueva-experiencia
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Editar experiencia
 
@@ -200,6 +265,10 @@ Requiere autentificación de _Administrador_
 [Body] raw - JSON
 Key -> idCategory, title, description, price, location, coords, startDate, endDate, active, featured, totalPlaces, conditions, normatives.
 Se puede modificar una o varios valores. El id de Categoría debe existir sino lanza error.
+[Response] Object ->{
+status: "ok", data: "Experiencia actualizada!"
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Borrar experiencia
 
@@ -211,6 +280,10 @@ desactivada lanza un error.
 Requiere autentificación de _Administrador_
 [Body]
 No tiene
+[Response] Object ->{
+status: "ok", data: "Experiencia eliminada de la base de datos"
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Subir foto experiencia
 
@@ -222,6 +295,10 @@ Requiere autentificación de _Administrador_
 Key -> photo
 Se envía como form-data, key debe ser de tipo 'file', 'Select Files' seleccionar la foto.
 Si el token corresponde a un administrador responde con mensaje de ok.
+[Response] Object ->{
+status: "ok", data: nombre-de-la-imagen-en-disco-duro
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Ver datos de una experiencia
 
@@ -232,6 +309,11 @@ Muestra todos los datos sobre el id de la experiencia requerida como path-param
 Requiere autentificación de*Administrador*
 [Body]
 No tiene
+[Response] Object ->{
+status: "ok", data: Object con propiedades: { id, idCategory, title, description, price, location, coords, photo, startDate, endDate, active
+featured, totalPlaces, conditiones, normatives}
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Listar experiencias
 
@@ -243,6 +325,10 @@ por título de forma ascendente
 No requiere ningún tipo de autentificación
 [Body]
 No tiene
+[Response] Object ->{
+status: "ok", data: Array de Object con propiedades: { id, title, description, photo, active, createdAt}
+status: "error", message: Descripción del error -> _error_
+}
 
 ############################################################################################
 Reservas
@@ -260,11 +346,15 @@ idExperience para la experiencia a reservar.
 Comprueba que existen plazas suficientes para la reserva en esa experiencia en ese día en concreto para poder
 realizar la reserva, en caso contrario lanza error indicando el número de plazas disponibles.
 Se envía mail con los datos de la reserva y QRs de acceso como entradas de la reserva.
+[Response] Object ->{
+status: "ok", data: _ticket-de-la-reserva-
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Cancelar reserva
 
 Reservas -> Cancelar Reserva
-[DELETE] http://localhost:4000/booking/_booking.ticket_
+[DELETE] http://localhost:4000/booking/_ticketbooking_
 Se cancela la reserva con el campo ticket igual al introducido como path-param. El usuario tiene que ser el propietario de la
 reserva. Se envía mail confirmando la cancelación de la reserva. Se elimina el/los QRs del disco duro y de la
 base de datos. No se permite cancelar ninguna reserva pasada o con menos de 24h de antelación.
@@ -272,6 +362,10 @@ base de datos. No se permite cancelar ninguna reserva pasada o con menos de 24h 
 Requiere autentificación de _usuario_ que creó la reserva
 [Body]
 No tiene
+[Response] Object ->{
+status: "ok", data: "Reserva Cancelada"
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Ver una/s reserva/s del usuario
 
@@ -284,6 +378,11 @@ Sólo el usuario propietario puede visualizarla/s.
 Requiere autentificación de _usuario_ propietario de la reserva
 [Body]
 No tiene
+[Response] Object ->{
+status: "ok", data: Array de Object con propiedades: { id, idExperience, idUser, ticket, expired, createdAt, dateExperience, title,
+description, location, photo}
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Listar reservas
 
@@ -295,6 +394,10 @@ en orden descendente.
 Requiere autentificación de _Administrador_
 [Body]
 No tiene
+[Response] Object ->{
+status: "ok", data: Array de Object con propiedades: { id, user, experience, ticket, date_experience, quantity, total_price}
+status: "error", message: Descripción del error -> _error_
+}
 
 ############################################################################################
 Opiniones
@@ -303,8 +406,8 @@ Opiniones
 ### Crear nueva opinión
 
 Opiniones -> Crear Opinión
-[POST] http://localhost:4000/review/_ticketNumber_
-Crea una opinión según _ticketNumber_ (booking). Sólo puede existir una opinión por _ticketNumber_ de 'booking',
+[POST] http://localhost:4000/review/_ticketbooking_
+Crea una opinión según _ticketbooking_ (booking). Sólo puede existir una opinión por _ticketbooking_ de 'booking',
 la opinión sólo se puede realizar una vez pasada la fecha de la reserva. La opinión no se puede borrar ni modificar.
 [Headers]
 Requiere autentificación de usuario propietario de la reserva
@@ -313,6 +416,26 @@ Key -> 'description' la opinión del usuario, 'score' valor entero entre 0 y 5 q
 experiencia.
 Comprueba que la fecha en el momento de la opinión es posterior a la fecha efectiva de la reserva, sino es así,
 lanza un error.
+[Response] Object ->{
+status: "ok", data: "Votación correcta"
+status: "error", message: Descripción del error -> _error_
+}
+
+### Ver Opinión por ticket
+
+Opiniones -> Ver Opinión por ticket booking
+[GET] http://localhost:4000/ratingExp?ticket=_ticketbooking_
+Ver datos de una opinión buscada por su _ticketbooking_ como query-param
+[Headers]
+No requiere ningún tipo de autentificación
+[Body]
+No tiene
+[query-params]
+'ticket' -> busca la opinión por su número de ticket
+[Response] Object ->{
+status: "ok", data: Object con propiedades: { idBookingExperience, description, score, voted, createdAt, idExperience}
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Listar Opiniones
 
@@ -330,6 +453,10 @@ lista todas las opiniones
 por defecto por Fecha
 'direction' (Opcional) ordena los resultados de forma ascendente o descendente, por defecto,si no se envía este valor
 se ordenan de forma ascendente.
+[Response] Object ->{
+status: "ok", data: Array de Object con propiedades: { id, experience, description, score, date, user, category}
+status: "error", message: Descripción del error -> _error_
+}
 
 ############################################################################################
 Filtros
@@ -362,6 +489,11 @@ KEY category -> Muestra las experiencias que pertenezcan a la categoría con los
 enviados.
 KEY order -> category|experience|price|location|title . Ordena por columna.
 KEY direction -> ASC | DESC. Ordena ascendente o descendentemente.
+[Response] Object ->{
+status: "ok", data: Array de Object con propiedades: { category, id, title, price, startDate, endDate, location, coords, description,
+photo, featured, active}
+status: "error", message: Descripción del error -> _error_
+}
 
 ### Filtar Experiencias con reservas y número de plazas ocupadas
 
@@ -380,11 +512,15 @@ KEY experienceID -> Lista las experiencias por día con plazas ocupadas de la ex
 KEY date -> Lista todas las experiencias con plazas ocupadas en esa fecha.
 KEY order -> category|title|occupied|location. Ordena por columna.
 KEY direction -> ASC | DESC. Ordena ascendente o descendentemente.
+[Response] Object ->{
+status: "ok", data: Array de Object con propiedades: { }
+status: "error", message: Descripción del error -> _error_
+}
 
-### Filtar Experiencias por Localización
+### Filtar Experiencias por Destacados
 
-Filtros -> Filtrar Experiencia por Localización
-[GET] http://localhost:4000/filters/review?searchBy=_start_&_order_&_direction_
+Filtros -> Filtrar Experiencia por Destacados
+[GET] http://localhost:4000/filters/featured
 Listado de las experiencias que contienen la palabra almacenada en el query-param*start* en la localización y estén activas.
 [Headers]
 No requiere ningún tipo de autentificación
@@ -394,3 +530,46 @@ No tiene
 Todos son opcionales
 KEY order -> price|location|title. Ordena por columna, si se deja vacío ordena por título de la categoría.
 KEY direction -> ASC | DESC. Ordena ascendente o descendentemente.
+[Response] Object ->{
+status: "ok", data: Array de Object con propiedades: { category, id, title, description, price, location, photo, coords, startDate, endDate}
+status: "error", message: Descripción del error -> _error_
+}
+
+
+############################################################################################
+Newsletter
+############################################################################################
+
+### Añadir correo electrónico a la lista de Newsletters
+
+Newsletter -> Añade email a lista de Newsletter
+[POST] http://localhost:4000/newsletter
+Añade el email a la lista de Newsletter
+[Headers]
+No requiere ningún tipo de autentificación
+[Body]
+Key -> 'email' . Añade email a la lista de Newsletter.
+Comprueba que el email sea válido y no exista con anterioridad en la base de datos
+[query-params]
+No tiene
+[Response] Object ->{
+status: "ok", data: "Email añadido a la Newsletter
+status: "error", message: Descripción del error -> _error_
+}
+
+### Eliminar correo electrónico de la lista de Newsletters
+
+Newsletter -> Elimina email de lista de Newsletter
+[DELETE] http://localhost:4000/newsletter
+Elimina el email de la lista de Newsletter
+[Headers]
+No requiere ningún tipo de autentificación
+[Body]
+Key -> 'email' . Elimina el email de la lista de Newsletter.
+Comprueba que el email exista, si es así lo elimina de la base de datos
+[query-params]
+No tiene
+[Response] Object ->{
+status: "ok", data: "Email eliminado de la Newsletter
+status: "error", message: Descripción del error -> _error_
+}

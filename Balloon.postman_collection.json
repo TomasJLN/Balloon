@@ -21,7 +21,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\":\"Otra más\",\n    \"description\":\"\"\n}",
+							"raw": "{\n    \"title\":\"Una nueva categoría\",\n    \"description\":\"Descripción de una nueva categoría\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -162,7 +162,7 @@
 								{
 									"key": "photo",
 									"type": "file",
-									"src": "/home/tommy/Desktop/scraping/aladinia_thumbnails/4-paracaidas.jpg"
+									"src": []
 								}
 							]
 						},
@@ -218,7 +218,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "{{admin}}",
+								"value": "{{user2}}",
 								"type": "text"
 							}
 						],
@@ -410,7 +410,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"tyourEmailHere\",\n    \"password\": \"123456\"\n}",
+							"raw": "{\n    \"email\": \"yourEmailHere\",\n    \"password\": \"123456\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -536,7 +536,7 @@
 								{
 									"key": "photo",
 									"type": "file",
-									"src": "/home/tommy/Desktop/scraping/aladinia_thumbnails/3-entradas.jpg"
+									"src": []
 								}
 							]
 						},
@@ -671,7 +671,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\"dateExperience\": \"2021-12-13\",\n\"quantity\": \"1\",\n\"idExperience\": \"8\"\n}",
+							"raw": "{\n\"dateExperience\": \"2022-12-13\",\n\"quantity\": \"1\",\n\"idExperience\": \"8\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -807,7 +807,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Server}}/review?searchByExp=9",
+							"raw": "{{Server}}/review?searchByExp=8",
 							"host": [
 								"{{Server}}"
 							],
@@ -827,7 +827,7 @@
 								},
 								{
 									"key": "searchByExp",
-									"value": "9"
+									"value": "8"
 								}
 							]
 						}
@@ -999,14 +999,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
 				}
 			]
 		},
@@ -1095,15 +1087,15 @@
 		},
 		{
 			"key": "admin",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQzOTkwODY2LCJleHAiOjE2NDQ4NTQ4NjZ9.XBCEGQMUzcLR2hUxl9klQAgI2fVaIWbVkobcQnOFpRY"
+			"value": ""
 		},
 		{
 			"key": "user2",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ0NTE2MTkxLCJleHAiOjE2NDUzODAxOTF9.buuu_MXTkOUGcqZkclEDxVdxNb92TN2HbcZMelx-stM"
+			"value": ""
 		},
 		{
-			"key": "user3",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQyODcxODMyLCJleHAiOjE2NDM3MzU4MzJ9.gdDPROXa2vZr3xVmemW3DMuMNKwntwNuRZ5z5zORfwI"
+			"value": "",
+			"disabled": true
 		}
 	]
 }
