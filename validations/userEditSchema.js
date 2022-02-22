@@ -17,7 +17,7 @@ const userEditSchema = Joi.object()
                         );
                     default:
                         return new Error(
-                            'El Nombre no puede tener más de 150 caracteres'
+                            'El Nombre debe tener entre 3 y 150 caracteres'
                         );
                 }
             }),
@@ -47,7 +47,7 @@ const userEditSchema = Joi.object()
                 switch (errors[0].code) {
                     case 'string.min':
                         return new Error(
-                            'Contraseña no puede tener menos de 3 caracteres'
+                            'Contraseña no puede tener menos de 4 caracteres'
                         );
                     case 'string.max':
                         return new Error(
@@ -55,12 +55,10 @@ const userEditSchema = Joi.object()
                         );
                     default:
                         return new Error(
-                            'Contraseña no puede tener más de 50 caracteres'
+                            'Contraseña debe tener entre 4 y 50 caracteres'
                         );
                 }
             }),
-
-        // newPassword: Joi.ref('password'),
     })
     .unknown();
 
