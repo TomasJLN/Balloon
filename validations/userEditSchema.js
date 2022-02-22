@@ -60,7 +60,7 @@ const userEditSchema = Joi.object()
                 }
             }),
 
-        newPassword: Joi.ref('password'),
+        // newPassword: Joi.ref('password'),
     })
     .unknown();
 
