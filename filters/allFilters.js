@@ -16,6 +16,7 @@ const allFilters = async (req, res, next) => {
             category,
             order,
             direction,
+            active,
             featured,
         } = req.query;
 
@@ -40,7 +41,11 @@ const allFilters = async (req, res, next) => {
         let query = `SELECT category.title AS category, experience.id AS id, experience.title, experience.price, experience.startDate,
          experience.endDate, experience.location, experience.coords, experience.description, experience.photo, experience.featured, experience.active 
          FROM experience, category
-         WHERE experience.active = 1 AND experience.idCategory = category.id`;
+         WHERE  experience.idCategory = category.id`;
+
+        if (active) {
+            query += ` AND experience.active = 1`;
+        }
 
         if (start && end) {
             query += ` AND (('${end}' BETWEEN experience.startDate AND experience.endDate) 
