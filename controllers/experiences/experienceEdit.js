@@ -86,7 +86,7 @@ const experienceEdit = async (req, res, next) => {
                 description,
                 price,
                 location,
-                coords,
+                coords.replace(/ +/g, ''),
                 startDate,
                 endDate,
                 active,
