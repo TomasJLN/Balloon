@@ -1,7 +1,6 @@
-const { PUBLIC_HOST, UPLOADS_DIRECTORY } = process.env;
+const { PUBLIC_HOST } = process.env;
 
 const registryMail = (registryCode) => {
-    console.log('../' + UPLOADS_DIRECTORY + '/balloon_logo.png');
     return `
 <body style="margin: 10px; box-sizing: border-box; padding: 0">
     <style>

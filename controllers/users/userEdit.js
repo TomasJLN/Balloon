@@ -15,8 +15,6 @@ const userEdit = async (req, res, next) => {
 
         const idReqUser = req.userAuth.id;
 
-        console.log(typeof idReqUser);
-
         let { name, surname, password, newPassword } = req.body;
 
         await validate(userEditSchema, req.body);

@@ -73,10 +73,9 @@ async function savePhoto(image, type) {
 
 /** deletePhoto **/
 async function deletePhoto(photoName) {
-    console.log(path.join(uploadsDir, photoName));
     try {
         const photoPath = path.join(uploadsDir, photoName);
-        console.log('ruta de la foto ', photoPath, photoName);
+
         await unlink(photoPath);
     } catch (_) {
         // throw new Error('Error al eliminar la imagen del servidor');

@@ -13,9 +13,7 @@ const categoryNew = async (req, res, next) => {
 
         await validate(categoryNewSchema, req.body);
 
-        const { id: idReqUser, role: roleReqUser } = req.userAuth;
-
-        console.log(idReqUser, roleReqUser);
+        const { role: roleReqUser } = req.userAuth;
 
         if (roleReqUser !== 'admin') {
             const error = new Error('No tienes privilegios para crear');
