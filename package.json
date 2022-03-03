@@ -4,7 +4,7 @@
   "description": "Balloon Experiences",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server",
     "createDB": "node database/createDB.js",
     "db": "node database/initDB.js",
     "populateData": "node database/populateData.js",
@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "eslint": "^7.28.0",
-    "morgan": "^1.10.0",
     "nodemon": "^2.0.15",
     "prettier": "^2.3.1"
   }
