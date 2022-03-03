@@ -2,11 +2,12 @@
 
 ```
 # FIRST STEPS #
+Please, keep an eye on Documentation Folder to get some info
 To create database execute './create_db.sh' inside  database folder.
 You should create in your mysql the user 'demo' with password '123456'
 Then run: 'npm run db', to create all tables
 If you have database 'balloon_db' forget this steps, just
-Execute: 'npm run db', to create all tables
+Execute: 'npm run db', to create all tables and populateData to get some experiences
 
 #############################################################################
 
