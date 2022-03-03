@@ -14,8 +14,6 @@ const bookingCancel = async (req, res, next) => {
         const { ticketNumber } = req.params;
         const { id: idReqUser } = req.userAuth;
 
-        console.log(req.params);
-
         const [data] = await connection.query(
             `
             SELECT booking.id, booking.idUser AS idUser, booking.ticket AS ticket, qr.qrPicture, booking_experience.dateExperience AS dateExperience,

@@ -73,8 +73,6 @@ const allFilters = async (req, res, next) => {
 
         query += ` ORDER BY ${orderBy} ${orderDirection}`;
 
-        console.log(query);
-
         const [list] = await connection.query(`${query}`);
 
         res.send({

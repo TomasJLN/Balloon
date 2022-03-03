@@ -18,7 +18,6 @@ const bookingExists = async (req, res, next) => {
             error.httpStatus = 404;
             throw error;
         }
-        console.log('aqui llega - bookingExists');
         next();
     } catch (error) {
         next(error);

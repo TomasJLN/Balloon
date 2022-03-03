@@ -149,7 +149,6 @@ const bookingNew = async (req, res, next) => {
                 },
                 function (err) {
                     if (err) throw err;
-                    console.log('done');
                 }
             );
             await connection.query(

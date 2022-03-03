@@ -32,8 +32,6 @@ const userResetPassword = async (req, res, next) => {
 
         const encryptedNewPassword = await bcrypt.hash(newPassword, saltRounds);
 
-        console.log(user[0].id, encryptedNewPassword, newPassword);
-
         await connection.query(
             `UPDATE user SET password = ?, recoveryCode = NULL, modifiedAt = now() WHERE id = ?;`,
             [encryptedNewPassword, user[0].id]

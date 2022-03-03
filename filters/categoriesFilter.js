@@ -8,8 +8,6 @@ const categoriesFilter = async (req, res, next) => {
 
         let { title, order, direction } = req.query;
 
-        console.log(title);
-
         const validOrderOptions = ['id', 'title'];
         const validDirectionOptions = ['DESC', 'ASC'];
 
@@ -27,8 +25,6 @@ const categoriesFilter = async (req, res, next) => {
         }
 
         query += ` ORDER BY ${orderBy} ${orderDirection}`;
-
-        console.log(query);
 
         const [list] = await connection.query(`${query}`);
 

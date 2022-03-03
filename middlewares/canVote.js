@@ -26,7 +26,6 @@ const canVote = async (req, res, next) => {
             error.httpStatus = 403;
             throw error;
         }
-        console.log('aqui llega - canVote');
         next();
     } catch (error) {
         next(error);

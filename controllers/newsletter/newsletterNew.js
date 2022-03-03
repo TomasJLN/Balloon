@@ -13,8 +13,6 @@ const newsletterNew = async (req, res, next) => {
 
         const { email } = req.body;
 
-        console.log(email);
-
         await validate(newsletterSchema, req.body);
 
         if (!email) {
@@ -27,8 +25,6 @@ const newsletterNew = async (req, res, next) => {
             'SELECT email FROM newsletter WHERE email = ?',
             [email]
         );
-
-        console.log(mail);
 
         if (mail.length > 0) {
             const error = new Error('Email ya registrado en la Newsletter');
