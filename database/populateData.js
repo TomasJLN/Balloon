@@ -14,16 +14,16 @@ async function populateData() {
 
         //Create table category
         await connection.query(`
-        INSERT INTO category (title, description) values 
-        ('Aventura','Atrévete a saltar en paracaídas o sin él, buceo con tiburones, un salto de puenting, rafting, nodejs y más.'),
-        ('Gourmet', 'Experimenta nuevos sabores, prueba las nuevas cervezas artesanales fermentadas en el retrete, catas de vinos con taxi para la vuelta incluído'),
-        ('Relax', 'Las mejores experiencias en Spa, baños turcos, baños árabes, bañeras y mucho más'),
-        ('Naturaleza', 'Camina con osos pardos, recoge setas venenosas, chupa piel de sapo y más.')
+        INSERT INTO category (title, description, photo) values 
+        ('Aventura', 'Atrévete a saltar en paracaídas o sin él, buceo con tiburones, un salto de puenting, rafting, nodejs y más.'	'5bd148d3-e7f5-4350-b328-bdbcc00cdaa5.jpg'),
+        ('Gourmet',	'Experimenta nuevos sabores, prueba las nuevas cervezas artesanales fermentadas en el retrete, catas de vinos con taxi para la vuelta incluído.' '1dc0d9a9-b596-4d55-976d-e060ed43b49b.jpg'),
+        ('Relax', 'Las mejores experiencias en Spa, baños turcos, baños árabes, bañeras y mucho más.' '2745c6b4-79e7-4639-956d-9331ecbb6ea8.jpg'),
+        ('Naturaleza'	Camina con osos pardos, recoge setas venenosas, chupa piel de sapo y más. '7b8fea88-f038-42a7-b78c-29a6109dcdc7.jpg')
         `);
 
         //Create table experience
         await connection.query(`
-        INSERT INTO experience (idCategory, title, description, price, location, coords, photo, startDate, endDate, featured, conditions,normatives)
+        INSERT INTO experience (idCategory, title, description, price, location, coords, photo, startDate, endDate, featured, conditions, normatives)
         VALUES
           (1,'Vuelo en Parapente con video', 'Blablabla', 55, 'Tarragona', '41.2123104650502, 0.9792378651733277', 'parapente.png' ,'2022-1-1', '2022-5-24', 0, 'N/A', 'N/A'),
           (1,'Vuelo en helicóptero', 'Blablabla', 77.90, 'Barcelona', '41.525247886651314, 1.97095384168887', 'helicoptero.jpg','2021-12-15', '2022-3-16', 0, 'N/A', 'N/A'),
