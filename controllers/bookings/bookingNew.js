@@ -159,10 +159,11 @@ const bookingNew = async (req, res, next) => {
             );
         }
 
-        const coords =
+        let coords =
             experience[0].coords !== null
                 ? experience[0].coords
-                : '40.417006315800684, -3.7026041791471616';
+                : '40.417006315800684,-3.7026041791471616';
+        coords = coords.replace(/ +/g, '');
 
         let bodyText = `
         <body style="margin: 0; box-sizing: border-box; padding: 0">
