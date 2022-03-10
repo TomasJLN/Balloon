@@ -56,7 +56,7 @@ async function initializeDB() {
         await connection.query(`
         CREATE TABLE IF NOT EXISTS experience (
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-            idCategory INT UNSIGNED NOT NULL, FOREIGN KEY (idCategory) REFERENCES category(id) ON UPDATE CASCADE,
+            idCategory INT UNSIGNED NOT NULL, FOREIGN KEY (idCategory) REFERENCES category(id) ON UPDATE CASCADE ON DELETE CASCADE,
             title VARCHAR(150) NOT NULL,
             description VARCHAR(255), 
             price DECIMAL(6,2) NOT NULL, 

@@ -45,9 +45,14 @@ const categoryNew = async (req, res, next) => {
             [title, description]
         );
 
+        const [idCat] = await connection.query(
+            'SELECT id FROM category WHERE title = ?',
+            [title]
+        );
+
         res.send({
             status: 'ok',
-            data: 'Categoría creada',
+            data: idCat[0].id,
         });
     } catch (error) {
         next(error);
