@@ -64,7 +64,6 @@ const allFilters = async (req, res, next) => {
 
         if (location) query += ` AND experience.location like '%${location}%'`;
 
-        console.log(ratin);
         if (ratin) query += ` AND experience.ratin >= ${ratin}`;
 
         if (experience)
@@ -76,8 +75,6 @@ const allFilters = async (req, res, next) => {
         if (featured === '1') query += ` AND experience.featured = '1'`;
 
         query += ` ORDER BY ${orderBy} ${orderDirection}`;
-
-        console.log(query);
 
         const [list] = await connection.query(`${query}`);
 

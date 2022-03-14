@@ -58,8 +58,6 @@ const reviewNew = async (req, res, next) => {
             [idBE[0].idExperience]
         );
 
-        console.log(Number(countExp[0].avg));
-
         await connection.query('UPDATE experience SET ratin = ? WHERE id = ?', [
             Number(countExp[0].avg),
             idBE[0].idExperience,
