@@ -16,8 +16,20 @@ const reviewNew = async (req, res, next) => {
         await validate(reviewNewSchema, req.body);
 
         const [idBE] = await connection.query(
-            `SELECT booking.id FROM booking WHERE booking.ticket = ?`,
+            `SELECT * FROM booking WHERE booking.ticket = ?`,
             [ticketNumber]
+        );
+
+        const [ratinExp] = await connection.query(
+            `SELECT experience.ratin FROM experience WHERE experience.id = ?`,
+            [idBE[0].idExperience]
+        );
+
+        const [countExp] = await connection.query(
+            `SELECT count(*) AS count FROM balloon_db.review
+            left join booking_experience on idBookingExperience = booking_experience.id
+            where booking_experience.idExperience = ?`,
+            [idBE[0].idExperience]
         );
 
         const [user] = await connection.query(
@@ -50,6 +62,13 @@ const reviewNew = async (req, res, next) => {
             'INSERT INTO review SET idBookingExperience = ?, description = ?, score = ?, voted = 1',
             [idBE[0].id, description, score]
         );
+
+        const avgRatin = (score + ratinExp[0].ratin) / (countExp[0].count + 1);
+
+        await connection.query('UPDATE experience SET ratin = ? WHERE id = ?', [
+            avgRatin,
+            idBE[0].idExperience,
+        ]);
 
         res.send({
             status: 'ok',

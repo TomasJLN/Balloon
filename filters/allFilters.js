@@ -22,7 +22,7 @@ const allFilters = async (req, res, next) => {
 
         const validOrderOptions = [
             'category',
-            'experience',
+            'id',
             'price',
             'location',
             'title',
