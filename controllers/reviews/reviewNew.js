@@ -20,18 +20,6 @@ const reviewNew = async (req, res, next) => {
             [ticketNumber]
         );
 
-        const [ratinExp] = await connection.query(
-            `SELECT experience.ratin FROM experience WHERE experience.id = ?`,
-            [idBE[0].idExperience]
-        );
-
-        const [countExp] = await connection.query(
-            `SELECT count(*) AS count FROM balloon_db.review
-            left join booking_experience on idBookingExperience = booking_experience.id
-            where booking_experience.idExperience = ?`,
-            [idBE[0].idExperience]
-        );
-
         const [user] = await connection.query(
             'SELECT idUser FROM booking_experience WHERE id = ?',
             [idBE[0].id]
@@ -63,10 +51,17 @@ const reviewNew = async (req, res, next) => {
             [idBE[0].id, description, score]
         );
 
-        const avgRatin = (score + ratinExp[0].ratin) / (countExp[0].count + 1);
+        const [countExp] = await connection.query(
+            `SELECT avg(score) AS avg FROM balloon_db.review
+            left join booking_experience on idBookingExperience = booking_experience.id
+            where booking_experience.idExperience = ?`,
+            [idBE[0].idExperience]
+        );
+
+        console.log(Number(countExp[0].avg));
 
         await connection.query('UPDATE experience SET ratin = ? WHERE id = ?', [
-            avgRatin,
+            Number(countExp[0].avg),
             idBE[0].idExperience,
         ]);
 

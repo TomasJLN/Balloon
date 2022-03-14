@@ -14,6 +14,7 @@ const allFilters = async (req, res, next) => {
             location,
             experience,
             category,
+            ratin,
             order,
             direction,
             active,
@@ -39,7 +40,7 @@ const allFilters = async (req, res, next) => {
         end_price = end_price ? end_price : 10000;
 
         let query = `SELECT category.title AS category, experience.id AS id, experience.title, experience.price, experience.startDate,
-         experience.endDate, experience.location, experience.coords, experience.description, experience.photo, experience.featured, experience.active 
+         experience.endDate, experience.location, experience.coords, experience.description, experience.photo, experience.ratin, experience.featured, experience.active 
          FROM experience, category
          WHERE experience.idCategory = category.id AND category.active = 1`;
 
@@ -63,6 +64,9 @@ const allFilters = async (req, res, next) => {
 
         if (location) query += ` AND experience.location like '%${location}%'`;
 
+        console.log(ratin);
+        if (ratin) query += ` AND experience.ratin >= ${ratin}`;
+
         if (experience)
             query += ` AND (experience.title like '%${experience}%' OR experience.description like '%${experience}%')`;
 
@@ -72,6 +76,8 @@ const allFilters = async (req, res, next) => {
         if (featured === '1') query += ` AND experience.featured = '1'`;
 
         query += ` ORDER BY ${orderBy} ${orderDirection}`;
+
+        console.log(query);
 
         const [list] = await connection.query(`${query}`);
 
