@@ -65,6 +65,11 @@ const {
 /** ReviewNew **/
 const { reviewList, reviewNew, reviewGet } = require('./controllers/reviews');
 
+/** DashBoard **/
+const monthCharged = require('./dashboard_querys/monthCharged.js');
+const bestExperiences = require('./dashboard_querys/bestExperiences.js');
+const totalUsers = require('./dashboard_querys/totalUsers');
+
 /** Filter Controller **/
 const {
     experienceFeatured,
@@ -126,6 +131,12 @@ app.post('/newsletter', newsletterNew);
 app.delete('/newsletter', newsletterDelete);
 // app.delete('/newsletter', newsletterDelete);
 // app.delete('/booking/:ticketNumber', isAuth, bookingExists, bookingCancel);
+
+/** Dashboard Endpoints **/
+// app.post('/booking', isAuth, bookingNew);
+app.get('/dashboard', monthCharged);
+app.get('/dashboard/bestExp', bestExperiences);
+app.get('/dashboard/totalUsers', totalUsers);
 
 /** Review Endpoints **/
 app.post('/review/:ticketNumber', isAuth, bookingExists, canVote, reviewNew);
