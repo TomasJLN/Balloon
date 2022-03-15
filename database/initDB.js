@@ -67,6 +67,7 @@ async function initializeDB() {
             endDate DATETIME,
             active BOOLEAN DEFAULT true,
             featured BOOLEAN DEFAULT false,
+            ratin TINYINT UNSIGNED DEFAULT 0,
             totalPlaces TINYINT UNSIGNED NOT NULL DEFAULT 10,
             conditions VARCHAR(255),
             normatives VARCHAR(255),
