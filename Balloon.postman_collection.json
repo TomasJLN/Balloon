@@ -868,7 +868,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Server}}/allFilter?featured=1",
+							"raw": "{{Server}}/allFilter",
 							"host": [
 								"{{Server}}"
 							],
@@ -922,8 +922,9 @@
 									"disabled": true
 								},
 								{
-									"key": "featured",
-									"value": "1"
+									"key": "active",
+									"value": "1",
+									"disabled": true
 								}
 							]
 						}
@@ -1087,15 +1088,14 @@
 		},
 		{
 			"key": "admin",
-			"value": ""
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQ2OTE0MTY0LCJleHAiOjE2NDc3NzgxNjR9.3qkMNWlRX9imZYcu9AW3prS7j4v4f6ZwUrv5xl-hUhc"
 		},
 		{
 			"key": "user2",
-			"value": ""
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ1NTMzMjAyLCJleHAiOjE2NDYzOTcyMDJ9.tC5HErzeiGfK3rti1ZJhoH5cFB2tZee-ipNXBr80P5Y"
 		},
 		{
-			"value": "",
-			"disabled": true
+			"value": ""
 		}
 	]
 }
