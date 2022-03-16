@@ -44,7 +44,7 @@ const experienceNewSchema = Joi.object()
                         );
                     default:
                         return new Error(
-                            'La Descripción no puede tener más de 255 caracteres'
+                            'La Descripción debe tener entre 3 y 255 caracteres'
                         );
                 }
             }),

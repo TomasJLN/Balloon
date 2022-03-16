@@ -10,7 +10,7 @@ const categoryEditSchema = Joi.object()
                         return new Error('El título no puede quedar vacío');
                     case 'string.max':
                         return new Error(
-                            'El título no puede tener más de 50 caracteres'
+                            'El título debe tener entre 3 y 50 caracteres'
                         );
                     default:
                         return new Error('Título es obligatorio');
@@ -26,7 +26,7 @@ const categoryEditSchema = Joi.object()
                         );
                     default:
                         return new Error(
-                            'La Descripción no puede tener más de 255 caracteres'
+                            'La Descripción debe tener entre 3 y 255 caracteres'
                         );
                 }
             }),

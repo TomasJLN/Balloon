@@ -115,7 +115,6 @@ app.put('/experience/:idExperience/photo', isAuth, experiencePhotoUpload);
 app.delete('/experience/:idExperience', isAuth, experienceDelete);
 app.put('/experience/:idExperience', isAuth, experienceEdit);
 app.get('/experience/:idExperience', experienceGet);
-// app.get('/experience/price/filter', priceFilter);
 
 /** Booking Endpoints **/
 app.post('/booking', isAuth, bookingNew);
@@ -126,14 +125,10 @@ app.get('/booking/view/', isAuth, bookingGet);
 app.delete('/booking/:ticketNumber', isAuth, bookingExists, bookingCancel);
 
 /** Newsletter Endpoints **/
-// app.post('/booking', isAuth, bookingNew);
 app.post('/newsletter', newsletterNew);
 app.delete('/newsletter', newsletterDelete);
-// app.delete('/newsletter', newsletterDelete);
-// app.delete('/booking/:ticketNumber', isAuth, bookingExists, bookingCancel);
 
 /** Dashboard Endpoints **/
-// app.post('/booking', isAuth, bookingNew);
 app.get('/dashboard', monthCharged);
 app.get('/dashboard/bestExp', bestExperiences);
 app.get('/dashboard/totalUsers', totalUsers);
