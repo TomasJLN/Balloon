@@ -17,7 +17,8 @@ const bookingExists = require('./middlewares/bookingExists');
 const canVote = require('./middlewares/canVote');
 const userCheckMail = require('./middlewares/userCheckMail');
 //
-app.use(cors({ origin: 'https://balloon.tomcodes.dev' }));
+// app.use(cors({ origin: 'https://balloon.tomcodes.dev' }));
+app.use(cors({ origin: '*' }));
 
 /** User controllers **/
 const {
