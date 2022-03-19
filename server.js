@@ -17,7 +17,7 @@ const bookingExists = require('./middlewares/bookingExists');
 const canVote = require('./middlewares/canVote');
 const userCheckMail = require('./middlewares/userCheckMail');
 //
-app.use(cors());
+app.use(cors({ origin: '*' }));
 
 /** User controllers **/
 const {
