@@ -6,7 +6,6 @@ const getDB = require('../../database/getDB');
 const userValidate = async (req, res, next) => {
     let connection;
 
-    console.log('ey');
     try {
         connection = await getDB();
 
@@ -32,7 +31,7 @@ const userValidate = async (req, res, next) => {
         res.redirect(
             // status: 'ok',
             // data: 'El usuario ha sido activado',
-            'https://balloon.tomcodes.dev/?register=ok'
+            'http://balloon.tomcodes.dev/?register=ok'
         );
     } catch (error) {
         next(error);
