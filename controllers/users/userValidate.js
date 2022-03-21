@@ -28,10 +28,11 @@ const userValidate = async (req, res, next) => {
             [registryCode]
         );
 
-        res.send({
-            status: 'ok',
-            data: 'El usuario ha sido activado',
-        });
+        res.redirect(
+            // status: 'ok',
+            // data: 'El usuario ha sido activado',
+            'https://balloon.tomcodes.dev/?register=ok'
+        );
     } catch (error) {
         next(error);
     } finally {
