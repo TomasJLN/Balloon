@@ -1,5 +1,3 @@
-const { PUBLIC_HOST } = process.env;
-
 const registryMail = (registryCode) => {
     return `
 <body style="margin: 10px; box-sizing: border-box; padding: 0">
@@ -23,6 +21,11 @@ const registryMail = (registryCode) => {
         .hover-rotate:hover img {
             transform: scale(1.2) rotate(12deg);
         }
+
+        a, a:visited{
+            color: white;
+            text-decoration: none;
+        }
     </style>
     <section
         style="
@@ -37,11 +40,10 @@ const registryMail = (registryCode) => {
         <h3>Activa tu cuenta de usuario en Balloon</h3>
         <p>Para completar el registro</p>
         <p>pulsa en el globo</p>
-        <a href="http://localhost:3000/account?register=ok" target="_blank" rel="noreferrer"
-            ><figure class="hover-rotate">
+        <a href="http://localhost:3000/account?register=ok" target="_blank" rel="noreferrer"><figure class="hover-rotate">
                 <img
                     src="https://imagizer.imageshack.com/img922/9099/Sj6jBW.png"
-                    alt="Logo Balloon"
+                    alt="🎈 Logo Balloon"
                     width="60px"
                 /></figure
         ></a>
