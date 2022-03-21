@@ -37,7 +37,7 @@ const registryMail = (registryCode) => {
         <h3>Activa tu cuenta de usuario en Balloon</h3>
         <p>Para completar el registro</p>
         <p>pulsa en el globo</p>
-        <a href="${PUBLIC_HOST}/user/validate/${registryCode}" target="_blank" rel="noreferrer"
+        <a href="http://localhost:3000/account?register=ok" target="_blank" rel="noreferrer"
             ><figure class="hover-rotate">
                 <img
                     src="https://imagizer.imageshack.com/img922/9099/Sj6jBW.png"

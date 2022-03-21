@@ -2,6 +2,7 @@
 
 /** Requirements **/
 const getDB = require('../../database/getDB');
+
 const userValidate = async (req, res, next) => {
     let connection;
 
