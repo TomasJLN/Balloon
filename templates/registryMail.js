@@ -1,3 +1,5 @@
+const { PUBLIC_HOST } = process.env;
+
 const registryMail = () => {
     return `
 <body style="margin: 10px; box-sizing: border-box; padding: 0">
