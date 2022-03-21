@@ -1,4 +1,4 @@
-const registryMail = (registryCode) => {
+const registryMail = () => {
     return `
 <body style="margin: 10px; box-sizing: border-box; padding: 0">
     <style>
