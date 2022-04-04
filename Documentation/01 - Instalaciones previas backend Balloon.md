@@ -22,7 +22,7 @@
 3. Permisos de acceso para root
    `sudo mysql -u root -p`
    Introducir password de root
-   Se nos habre un una _consola de MySQL_ . Permisos para usuario root
+   Se nos abre un una _consola de MySQL_ . Permisos para usuario root
 
 ```ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
     GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
