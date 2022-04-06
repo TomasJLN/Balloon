@@ -35,7 +35,7 @@ const registryMail = (registryCode) => {
             height: 250px;
             border-radius: 1px solid red;
             text-align: center;
-            background-color: rebeccapurple;
+            background-color: rgb(63, 176, 172);
             color: whitesmoke;
         "
     >

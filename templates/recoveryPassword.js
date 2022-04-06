@@ -3,7 +3,7 @@ const recoveryPassword = (recoveryCode, yourName) => {
     <body style="margin: 0; box-sizing: border-box; padding: 0">        
         <section
             style="
-            background-color: rebeccapurple;
+            background-color: rgb(63, 176, 172);
             border-radius: 1px solid red;
             color: whitesmoke;
             display: flex;
