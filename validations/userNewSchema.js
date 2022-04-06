@@ -73,7 +73,7 @@ const userNewSchema = Joi.object()
                         return new Error('Contraseña no puede quedar vacía');
                     case 'string.min':
                         return new Error(
-                            'Contraseña no puede tener menos de 3 caracteres'
+                            'Contraseña no puede tener menos de 4 caracteres'
                         );
                     case 'string.max':
                         return new Error(
