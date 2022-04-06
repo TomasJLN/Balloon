@@ -130,7 +130,7 @@ const bookingNew = async (req, res, next) => {
                     {
                         type: 'svg',
                         width: 200,
-                        color: { dark: '#343434', light: '#E639D8' },
+                        color: { dark: '#555555', light: '#FFF' },
                     },
                     (err, QRCode) => {
                         return QRCode;
@@ -143,8 +143,8 @@ const bookingNew = async (req, res, next) => {
                 stringData,
                 {
                     color: {
-                        dark: '#00F',
-                        light: '#bdb7ff',
+                        dark: '#555555',
+                        light: '#FFF',
                     },
                 },
                 function (err) {
