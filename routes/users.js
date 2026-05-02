@@ -18,7 +18,6 @@ const {
 const isAuth = require('../middlewares/isAuth');
 const userExists = require('../middlewares/userExists');
 const userCheckMail = require('../middlewares/userCheckMail');
-const verifyTurnstile = require('../middlewares/verifyTurnstile');
 const {
     loginLimiter,
     registerLimiter,
@@ -29,7 +28,7 @@ const {
 const router = express.Router();
 
 // Crear cuenta activa con protección anti-abuso
-router.post('/', registerLimiter, registerEmailLimiter, verifyTurnstile, userNew);
+router.post('/', registerLimiter, registerEmailLimiter, userNew);
 // Activar cuenta por código
 router.get('/validate/:registryCode', userValidate);
 // Iniciar sesión

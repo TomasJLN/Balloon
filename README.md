@@ -14,8 +14,8 @@ El proyecto está dividido en dos aplicaciones:
 - Registro de usuario simplificado: `POST /user` crea la cuenta activa y devuelve
   un JWT. El frontend guarda el token y redirige a la landing sin requerir email
   de activación.
-- Protección anti-abuso en registro con rate limit por IP, rate limit por email,
-  límite máximo de usuarios y soporte opcional de Cloudflare Turnstile.
+- Protección anti-abuso en registro con rate limit por IP, rate limit por email
+  y límite máximo de usuarios.
 - Login, recuperación y reseteo de contraseña.
 - Listado y filtrado de experiencias por texto, categoría, ubicación, precio,
   fechas y destacados.
@@ -92,12 +92,6 @@ npm run createDB
 El backend usa por defecto MySQL con la base `balloon_db`. Revisa `.env.example`
 para configurar puerto, credenciales de base de datos, `SECRET` JWT y SendGrid.
 
-Para activar CAPTCHA en registro, configura también:
-
-```env
-TURNSTILE_SECRET_KEY=tu_clave_secreta_turnstile
-```
-
 Si despliegas detrás de proxy o balanceador, configura `TRUST_PROXY` con el
 número de saltos de confianza para que el rate limit detecte bien la IP real.
 
@@ -127,7 +121,6 @@ Variable principal del frontend:
 
 ```env
 REACT_APP_BACKEND_URL=http://localhost:4000
-REACT_APP_TURNSTILE_SITE_KEY=tu_site_key_turnstile
 ```
 
 La SPA se sirve normalmente en `http://localhost:3000`.
@@ -200,8 +193,6 @@ Para reducir altas automáticas masivas, el registro aplica:
 - Límite por email normalizado: 3 intentos por hora.
 - Límite total de cuentas con rol `user`: 50 por defecto mediante
   `MAX_USER_ACCOUNTS`.
-- CAPTCHA Turnstile si `TURNSTILE_SECRET_KEY` y `REACT_APP_TURNSTILE_SITE_KEY`
-  están configuradas.
 
 ## Dashboard y datos demo
 
@@ -347,8 +338,7 @@ dashboard se restringe desde el frontend por rol `admin` o `viewer`.
 - La autenticación usa JWT enviado en cabecera `Authorization`.
 - El frontend normaliza tokens a formato `Bearer <token>` cuando es necesario.
 - Hay rate limit en login, registro y recuperación.
-- El registro añade un segundo límite por email, cupo máximo de usuarios y
-  verificación Turnstile opcional.
+- El registro añade un segundo límite por email y cupo máximo de usuarios.
 - `helmet`, `cors`, `compression` y validaciones Joi están integradas en backend.
 - El rol `viewer` solo puede leer datos; las rutas de escritura rechazan su token
   con `401` en backend.
