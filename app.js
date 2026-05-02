@@ -4,6 +4,9 @@ const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
 const helmet = require('helmet');
 const compression = require('compression');
+const path = require('path');
+const sharp = require('sharp');
+const { ensureDir, pathExists } = require('fs-extra');
 require('dotenv').config();
 
 // Rutas importadas
@@ -22,18 +25,38 @@ if (process.env.TRUST_PROXY) {
     app.set('trust proxy', Number(process.env.TRUST_PROXY));
 }
 
+const corsOrigins = (process.env.CORS_ORIGIN || 'http://localhost:3000,http://127.0.0.1:3000')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+const isAllowedOrigin = (origin) =>
+    !origin || corsOrigins.includes('*') || corsOrigins.includes(origin);
+
+const getCorsOrigin = (origin) => {
+    if (corsOrigins.includes('*')) return '*';
+    return isAllowedOrigin(origin) ? origin : corsOrigins[0];
+};
+
 // Seguridad y rendimiento
 app.use(helmet());
 app.use(compression());
 // CORS configurable
-app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
+app.use(
+    cors({
+        origin(origin, callback) {
+            if (isAllowedOrigin(origin)) return callback(null, true);
+            return callback(new Error('Origen no permitido por CORS'));
+        },
+    })
+);
 // Logging de peticiones
 app.use(morgan('dev'));
 // Parseo automático de JSON
 app.use(express.json());
 app.use('/uploads', (req, res, next) => {
     // Esto asegura que la cabecera CORS esté en la respuesta de la imagen
-    res.header('Access-Control-Allow-Origin', process.env.CORS_ORIGIN || '*');
+    res.header('Access-Control-Allow-Origin', getCorsOrigin(req.headers.origin));
 
     // **CLAVE:** Si el error persiste, la cabecera 'Cross-Origin-Resource-Policy' (establecida por helmet)
     // está bloqueando la imagen. Para imágenes, debería ser 'cross-origin'.
@@ -50,6 +73,37 @@ app.use(
         responseOnLimit: 'Archivo demasiado grande',
     }),
 );
+
+app.get('/uploads/thumbs/:photo', async (req, res, next) => {
+    try {
+        const uploadsDir = path.join(__dirname, process.env.UPLOADS_DIRECTORY);
+        const thumbsDir = path.join(uploadsDir, 'thumbs');
+        const photo = path.basename(req.params.photo);
+        const sourcePath = path.join(uploadsDir, photo);
+        const thumbPath = path.join(thumbsDir, `${photo}.webp`);
+
+        if (!(await pathExists(sourcePath))) {
+            return res.status(404).json({ status: 'error', message: 'Imagen no encontrada' });
+        }
+
+        await ensureDir(thumbsDir);
+
+        if (!(await pathExists(thumbPath))) {
+            await sharp(sourcePath)
+                .resize({ width: 420, withoutEnlargement: true })
+                .webp({ quality: 72 })
+                .toFile(thumbPath);
+        }
+
+        res.header('Access-Control-Allow-Origin', getCorsOrigin(req.headers.origin));
+        res.header('Cross-Origin-Resource-Policy', 'cross-origin');
+        res.header('Cache-Control', 'public, max-age=2592000');
+        res.type('webp').sendFile(thumbPath);
+    } catch (error) {
+        next(error);
+    }
+});
+
 // Servir ficheros estáticos
 app.use('/uploads', express.static('static/uploads'));
 

@@ -52,13 +52,18 @@ const reviewNew = async (req, res, next) => {
         );
 
         const [countExp] = await connection.query(
-            `SELECT avg(score) AS avg FROM balloon_db.review
+            `SELECT avg(score) AS avg FROM review
             left join booking_experience on idBookingExperience = booking_experience.id
             where booking_experience.idExperience = ?`,
             [idBE[0].idExperience]
         );
 
-        await connection.query('UPDATE experience SET ratin = ? WHERE id = ?', [
+        const [ratingColumns] = await connection.query(
+            `SHOW COLUMNS FROM experience LIKE 'rating'`
+        );
+        const ratingColumn = ratingColumns.length > 0 ? 'rating' : 'ratin';
+
+        await connection.query(`UPDATE experience SET ${ratingColumn} = ? WHERE id = ?`, [
             Number(countExp[0].avg),
             idBE[0].idExperience,
         ]);

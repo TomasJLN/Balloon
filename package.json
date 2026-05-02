@@ -10,6 +10,7 @@
     "populateData": "node database/populateData.js",
     "seedDemo": "node database/seedDemoData.js",
     "dev": "nodemon index.js",
+    "setup": "node database/setup.js",
     "test": "jest --verbose --forceExit --detectOpenHandles"
   },
   "author": "Tomás Lago",
