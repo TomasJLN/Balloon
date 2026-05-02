@@ -10,6 +10,8 @@ const userNew = require('./userNew');
 const userRecoveryPassword = require('./userRecoveryPassword');
 const userResetPassword = require('./userResetPassword');
 const userValidate = require('./userValidate');
+const adminGetUsers = require('./adminGetUsers');
+const adminToggleUser = require('./adminToggleUser');
 
 module.exports = {
     userChangeAvatar,
@@ -22,4 +24,6 @@ module.exports = {
     userRecoveryPassword,
     userResetPassword,
     userValidate,
+    adminGetUsers,
+    adminToggleUser,
 };

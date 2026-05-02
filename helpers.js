@@ -60,7 +60,7 @@ async function savePhoto(image, type) {
         //maxWidth -> type = 0 avatar and type = 1 to photo
 
         if (type === 0) sharpImage.resize(200, 200);
-        else if (type === 1 && imageInfo > 800) sharpImage.resize(800);
+        else if (type === 1 && imageInfo.width > 800) sharpImage.resize(800);
 
         const imageName = `${uuid.v4()}.jpg`;
         const imagePath = path.join(uploadsDir, imageName);

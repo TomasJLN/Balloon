@@ -4,7 +4,6 @@
 const getDB = require('../../database/getDB');
 const { getRandomString, sendMail } = require('../../helpers');
 const QRCode = require('qrcode');
-const { indexOf } = require('lodash');
 const { validate } = require('../../helpers');
 const { bookingNewSchema } = require('../../validations/bookingNewSchema');
 
@@ -77,87 +76,66 @@ const bookingNew = async (req, res, next) => {
             throw error;
         }
 
-        await connection.query(
-            `
-        INSERT INTO booking (idExperience, idUser, ticket) values  (?, ?, ?);
-        `,
-            [idExperience, idReqUser, ticket]
-        );
+        // Iniciar transacción para garantizar consistencia
+        await connection.beginTransaction();
 
-        let nextId = await connection.query(
-            `SELECT MAX(id) AS nextId FROM booking`
-        );
-
-        nextId = Number(Object.values(nextId[0][0]));
-
-        let getPrice = await connection.query(
-            `SELECT price FROM experience WHERE id = ?;`,
-            [idExperience]
-        );
-
-        getPrice = Number(Object.values(getPrice[0][0]));
-
-        await connection.query(
-            `INSERT INTO booking_experience (dateExperience, quantity, totalPrice, idBooking, idExperience, idUser) values  (?, ?, ?, ?,?,?);`,
-            [
-                dateExperience,
-                quantity,
-                getPrice * quantity,
-                nextId,
-                idExperience,
-                idReqUser,
-            ]
-        );
-
-        let to = await connection.query(`SELECT email FROM user WHERE id = ?`, [
-            idReqUser,
-        ]);
-
-        to = Object.values(to[0][0]);
-
-        const arrQR = [];
-        for (const code of codesQR) {
-            let data = {
-                title: indexOf(code) + 1,
-                code,
-            };
-
-            let stringData = JSON.stringify(data.code);
-
-            arrQR.push(
-                QRCode.toString(
-                    stringData,
-                    {
-                        type: 'svg',
-                        width: 200,
-                        color: { dark: '#555555', light: '#FFF' },
-                    },
-                    (err, QRCode) => {
-                        return QRCode;
-                    }
-                )
+        try {
+            const [bookingResult] = await connection.query(
+                `INSERT INTO booking (idExperience, idUser, ticket) VALUES (?, ?, ?)`,
+                [idExperience, idReqUser, ticket]
             );
 
-            QRCode.toFile(
-                `./static/uploads/${code}.png`,
-                stringData,
-                {
-                    color: {
-                        dark: '#555555',
-                        light: '#FFF',
-                    },
-                },
-                function (err) {
-                    if (err) throw err;
-                }
+            const bookingId = bookingResult.insertId;
+
+            const [[{ price: unitPrice }]] = await connection.query(
+                `SELECT price FROM experience WHERE id = ?`,
+                [idExperience]
             );
+
             await connection.query(
-                `
-            INSERT INTO qr (idBooking, qrPicture) values  (?, ?);
-            `,
-                [nextId, `${code}.png`]
+                `INSERT INTO booking_experience (dateExperience, quantity, totalPrice, idBooking, idExperience, idUser) VALUES (?, ?, ?, ?, ?, ?)`,
+                [
+                    dateExperience,
+                    quantity,
+                    Number(unitPrice) * quantity,
+                    bookingId,
+                    idExperience,
+                    idReqUser,
+                ]
             );
-        }
+
+            const [[{ email: toEmail }]] = await connection.query(
+                `SELECT email FROM user WHERE id = ?`,
+                [idReqUser]
+            );
+
+            const arrQR = [];
+            for (let i = 0; i < codesQR.length; i++) {
+                const code = codesQR[i];
+                const stringData = JSON.stringify(code);
+
+                const qrSvg = await QRCode.toString(stringData, {
+                    type: 'svg',
+                    width: 200,
+                    color: { dark: '#555555', light: '#FFF' },
+                });
+                arrQR.push(qrSvg);
+
+                await QRCode.toFile(
+                    `./static/uploads/${code}.png`,
+                    stringData,
+                    { color: { dark: '#555555', light: '#FFF' } }
+                );
+
+                await connection.query(
+                    `INSERT INTO qr (idBooking, qrPicture) VALUES (?, ?)`,
+                    [bookingId, `${code}.png`]
+                );
+            }
+
+            await connection.commit();
+
+            const to = toEmail;
 
         let coords =
             experience[0].coords !== null
@@ -208,6 +186,10 @@ const bookingNew = async (req, res, next) => {
             status: 'ok',
             data: ticket,
         });
+        } catch (txError) {
+            await connection.rollback();
+            throw txError;
+        }
     } catch (error) {
         next(error);
     } finally {

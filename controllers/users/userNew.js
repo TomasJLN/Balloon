@@ -1,13 +1,10 @@
 'use strict';
 
-/** Requirements **/
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const jwt = require('jsonwebtoken');
 const getDB = require('../../database/getDB');
 const { validate } = require('../../helpers');
 const { userNewSchema } = require('../../validations/userNewSchema');
-
-const { getRandomString, checkEmail } = require('../../helpers');
 
 const userNew = async (req, res, next) => {
     let connection;
@@ -31,32 +28,51 @@ const userNew = async (req, res, next) => {
             throw error;
         }
 
-        const [user] = await connection.query(
+        const maxUserAccounts = Number(process.env.MAX_USER_ACCOUNTS || 50);
+
+        if (Number.isInteger(maxUserAccounts) && maxUserAccounts > 0) {
+            const [[{ totalUsers }]] = await connection.query(
+                `SELECT COUNT(*) AS totalUsers
+                FROM user
+                WHERE role = 'user' AND deleted = 0`
+            );
+
+            if (Number(totalUsers) >= maxUserAccounts) {
+                const error = new Error(
+                    'Se ha alcanzado el número máximo de usuarios registrados'
+                );
+                error.httpStatus = 403;
+                throw error;
+            }
+        }
+
+        const [existing] = await connection.query(
             'SELECT id FROM user WHERE email = ?',
             [email]
         );
 
-        if (user.length > 0) {
+        if (existing.length > 0) {
             const error = new Error('Ya existe la cuenta para este email');
             error.httpStatus = 409;
             throw error;
         }
 
-        const registryCode = getRandomString(40);
-        const encryptedPassword = await bcrypt.hash(password, saltRounds);
+        const encryptedPassword = await bcrypt.hash(password, 10);
 
-        await connection.query(
-            `
-        INSERT INTO user (name, surname, email, password, registryCode) values  (?, ?, ?, ?,?);
-        `,
-            [name, surname, email, encryptedPassword, registryCode]
+        const [result] = await connection.query(
+            `INSERT INTO user (name, surname, email, password, active) VALUES (?, ?, ?, ?, 1)`,
+            [name, surname, email, encryptedPassword]
         );
 
-        await checkEmail(email, registryCode);
+        const token = jwt.sign(
+            { id: result.insertId, role: 'user' },
+            process.env.SECRET,
+            { expiresIn: '10d' }
+        );
 
-        res.send({
+        res.status(201).send({
             status: 'ok',
-            data: 'Registro completado, comprueba tu email para activar tu cuenta',
+            data: token,
         });
     } catch (error) {
         next(error);

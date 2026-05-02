@@ -33,7 +33,7 @@ async function initializeDB() {
             avatar VARCHAR(50), 
             active BOOLEAN DEFAULT false,
             deleted BOOLEAN DEFAULT false,
-            role ENUM("admin", "user") DEFAULT "user" NOT NULL, 
+            role ENUM("admin", "user", "viewer") DEFAULT "user" NOT NULL,
             recoveryCode VARCHAR(150),
             registryCode VARCHAR(150), 
             createdAt DATETIME DEFAULT now(), 
@@ -67,7 +67,7 @@ async function initializeDB() {
             endDate DATETIME,
             active BOOLEAN DEFAULT true,
             featured BOOLEAN DEFAULT false,
-            ratin TINYINT UNSIGNED DEFAULT 0,
+            rating TINYINT UNSIGNED DEFAULT 0,
             totalPlaces TINYINT UNSIGNED NOT NULL DEFAULT 10,
             conditions VARCHAR(255),
             normatives VARCHAR(255),
@@ -134,18 +134,25 @@ async function initializeDB() {
         `);
 
         await connection.query('SET FOREIGN_KEY_CHECKS=1');
+
+        // Migración segura: añade 'viewer' al ENUM si no existe aún
+        await connection.query(`
+            ALTER TABLE user
+            MODIFY COLUMN role ENUM('admin', 'user', 'viewer') DEFAULT 'user' NOT NULL
+        `);
+
         console.log('DB setup... done!');
 
         console.log('Adding Administator account...');
-        const passwordEncrypted = await bcrypt.hashSync(
+        const passwordEncrypted = await bcrypt.hash(
             ADMIN_PASSWORD,
             saltRounds
         );
 
-        await connection.query(`
-        INSERT INTO user (name, surname, email, password, active, role)
-        values 
-       ('Admin', 'Admin', "${ADMIN_EMAIL}", "${passwordEncrypted}", true, 'admin');`);
+        await connection.query(
+            `INSERT INTO user (name, surname, email, password, active, role) VALUES (?, ?, ?, ?, true, 'admin')`,
+            ['Admin', 'Admin', ADMIN_EMAIL, passwordEncrypted]
+        );
 
         console.log('Administrator account... done');
 

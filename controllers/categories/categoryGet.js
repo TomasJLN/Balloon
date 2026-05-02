@@ -13,7 +13,7 @@ const categoryGet = async (req, res, next) => {
 
         const { role: roleReqUser } = req.userAuth;
 
-        if (roleReqUser !== 'admin') {
+        if (roleReqUser !== 'admin' && roleReqUser !== 'viewer') {
             const error = new Error('No tienes privilegios para crear');
             error.httpStatus = 401;
             throw error;

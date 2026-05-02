@@ -16,10 +16,18 @@ const isAuth = async (req, res, next) => {
             throw error;
         }
 
+        const token = authorization.split(' ')[1];
+
+        if (!token) {
+            const error = new Error('Formato de autorización inválido. Use: Bearer <token>');
+            error.httpStatus = 401;
+            throw error;
+        }
+
         let tokenInfo;
 
         try {
-            tokenInfo = jwt.verify(authorization, process.env.SECRET);
+            tokenInfo = jwt.verify(token, process.env.SECRET);
         } catch (_) {
             const error = new Error('Su Token no es válido');
             error.httpStatus = 401;

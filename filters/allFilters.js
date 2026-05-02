@@ -39,8 +39,8 @@ const allFilters = async (req, res, next) => {
         start_price = !start_price && end_price ? 1 : start_price;
         end_price = end_price ? end_price : 10000;
 
-        let query = `SELECT category.title AS category, experience.id AS id, experience.title, experience.price, experience.startDate,
-         experience.endDate, experience.location, experience.coords, experience.description, experience.photo, experience.ratin, experience.featured, experience.active 
+        let query = `SELECT category.title AS category, experience.id AS id, experience.idCategory, experience.title, experience.price, experience.startDate,
+         experience.endDate, experience.location, experience.coords, experience.description, experience.photo, experience.ratin, experience.featured, experience.active, experience.totalPlaces
          FROM experience, category
          WHERE experience.idCategory = category.id AND category.active = 1`;
 

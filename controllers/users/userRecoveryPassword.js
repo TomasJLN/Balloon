@@ -21,7 +21,7 @@ const userRecoveryPassword = async (req, res, next) => {
 
         const [user] = await connection.query(
             'SELECT id, name FROM user WHERE email = ?',
-            [email]
+            [email],
         );
 
         if (user.length > 0) {
@@ -38,8 +38,10 @@ const userRecoveryPassword = async (req, res, next) => {
             await connection.query(
                 `
             UPDATE user SET recoveryCode = ?, modifiedAt = now() WHERE email = ?`,
-                [recoveryCode, email]
+                [recoveryCode, email],
             );
+
+            console.log(recoveryCode);
         }
 
         res.send({

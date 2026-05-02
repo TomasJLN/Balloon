@@ -36,16 +36,25 @@ const bookingList = async (req, res, next) => {
             ? order
             : 'date_experience';
 
-        const query = `select booking.id, user.name AS user, experience.title AS experience, booking.ticket AS ticket, booking_experience.dateExperience AS date_experience, booking_experience.quantity AS quantity, booking_experience.totalPrice AS total_price from booking 
-        left join booking_experience on booking.id = booking_experience.id
-        left join user on booking.idUser = user.id
-        left join experience on booking.idExperience = experience.id ORDER BY ${orderBy} ${orderDirection}`;
+        const page = Math.max(parseInt(req.query.page) || 1, 1);
+        const limit = Math.min(Math.max(parseInt(req.query.limit) || 20, 1), 100);
+        const offset = (page - 1) * limit;
 
-        const [list] = await connection.query(`${query}`);
+        const [[{ total }]] = await connection.query(
+            `SELECT COUNT(*) AS total FROM booking`
+        );
+
+        const query = `SELECT booking.id, user.name AS user, experience.title AS experience, booking.ticket AS ticket, booking_experience.dateExperience AS date_experience, booking_experience.quantity AS quantity, booking_experience.totalPrice AS total_price FROM booking 
+        LEFT JOIN booking_experience ON booking.id = booking_experience.id
+        LEFT JOIN user ON booking.idUser = user.id
+        LEFT JOIN experience ON booking.idExperience = experience.id ORDER BY ${orderBy} ${orderDirection} LIMIT ? OFFSET ?`;
+
+        const [list] = await connection.query(query, [limit, offset]);
 
         res.send({
             status: 'ok',
             data: list,
+            pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
         });
     } catch (error) {
         next(error);

@@ -27,7 +27,7 @@ const bookingCancel = async (req, res, next) => {
             INNER JOIN experience
             ON booking_experience.idExperience = experience.id
             WHERE booking.ticket = ?;`,
-            [ticketNumber]
+            [ticketNumber],
         );
 
         const idBE = Number(data[0].id);
@@ -44,7 +44,7 @@ const bookingCancel = async (req, res, next) => {
 
         if (Number(idReqUser) !== Number(data[0].idUser)) {
             const error = new Error(
-                'No tienes permitido cancelar esta reserva'
+                'No tienes permitido cancelar esta reserva',
             );
             error.httpStatus = 401;
             throw error;
@@ -52,7 +52,7 @@ const bookingCancel = async (req, res, next) => {
 
         if (now() >= Number(data[0].dateExperience)) {
             const error = new Error(
-                'No se puede cancelar una reserva con menos de 24h de antelación'
+                'No se puede cancelar una reserva con menos de 24h de antelación',
             );
             error.httpStatus = 401;
             throw error;
@@ -60,12 +60,12 @@ const bookingCancel = async (req, res, next) => {
 
         const [to] = await connection.query(
             `SELECT email FROM user WHERE id = ?`,
-            [idReqUser]
+            [idReqUser],
         );
 
         const [qrs] = await connection.query(
             `SELECT id, qrPicture FROM qr WHERE idBooking = ?`,
-            [idBE]
+            [idBE],
         );
 
         for (const qr of qrs) {
