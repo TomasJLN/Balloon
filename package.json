@@ -5,9 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "createDB": "node database/createDB.js",
-    "db": "node database/initDB.js",
-    "populateData": "node database/populateData.js",
     "seedDemo": "node database/seedDemoData.js",
     "dev": "nodemon index.js",
     "setup": "node database/setup.js",
