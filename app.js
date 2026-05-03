@@ -74,6 +74,36 @@ app.use(
     }),
 );
 
+app.get('/uploads/thumbs/sm/:photo', async (req, res, next) => {
+    try {
+        const uploadsDir = path.join(__dirname, process.env.UPLOADS_DIRECTORY);
+        const thumbsSmDir = path.join(uploadsDir, 'thumbs', 'sm');
+        const photo = path.basename(req.params.photo);
+        const sourcePath = path.join(uploadsDir, photo);
+        const thumbPath = path.join(thumbsSmDir, `${photo}.webp`);
+
+        if (!(await pathExists(sourcePath))) {
+            return res.status(404).json({ status: 'error', message: 'Imagen no encontrada' });
+        }
+
+        await ensureDir(thumbsSmDir);
+
+        if (!(await pathExists(thumbPath))) {
+            await sharp(sourcePath)
+                .resize({ width: 340, withoutEnlargement: true })
+                .webp({ quality: 68 })
+                .toFile(thumbPath);
+        }
+
+        res.header('Access-Control-Allow-Origin', getCorsOrigin(req.headers.origin));
+        res.header('Cross-Origin-Resource-Policy', 'cross-origin');
+        res.header('Cache-Control', 'public, max-age=2592000');
+        res.type('webp').sendFile(thumbPath);
+    } catch (error) {
+        next(error);
+    }
+});
+
 app.get('/uploads/thumbs/:photo', async (req, res, next) => {
     try {
         const uploadsDir = path.join(__dirname, process.env.UPLOADS_DIRECTORY);
