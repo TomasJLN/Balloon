@@ -296,16 +296,17 @@ En errores se devuelve `status` de error y `message`.
 
 ### Dashboard
 
-Estos endpoints no aplican middleware de autenticación en backend; el acceso al
-dashboard se restringe desde el frontend por rol `admin` o `viewer`.
+Estos endpoints requieren JWT y rol `admin` o `viewer`. El backend aplica la
+misma restricción que el frontend para evitar exponer métricas de administración
+si la API queda accesible públicamente.
 
-| Método y ruta | Descripción |
-|---|---|
-| `GET /dashboard` | Facturación mensual |
-| `GET /dashboard/bestExp` | Top experiencias por reseñas |
-| `GET /dashboard/totalUsers` | Total de usuarios |
-| `GET /dashboard/monthlyRevenue` | Facturación/reservas por mes |
-| `GET /dashboard/bookingsByCategory` | Reservas por categoría |
+| Método y ruta | Descripción | Auth |
+|---|---|---|
+| `GET /dashboard` | Facturación mensual | Sí (`admin`/`viewer`) |
+| `GET /dashboard/bestExp` | Top experiencias por reseñas | Sí (`admin`/`viewer`) |
+| `GET /dashboard/totalUsers` | Total de usuarios | Sí (`admin`/`viewer`) |
+| `GET /dashboard/monthlyRevenue` | Facturación/reservas por mes | Sí (`admin`/`viewer`) |
+| `GET /dashboard/bookingsByCategory` | Reservas por categoría | Sí (`admin`/`viewer`) |
 
 ## Mejoras recientes de interfaz
 

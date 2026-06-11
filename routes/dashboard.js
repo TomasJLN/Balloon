@@ -5,8 +5,12 @@ const bestExperiences = require('../dashboard_querys/bestExperiences.js');
 const totalUsers = require('../dashboard_querys/totalUsers.js');
 const monthlyRevenue = require('../dashboard_querys/monthlyRevenue.js');
 const bookingsByCategory = require('../dashboard_querys/bookingsByCategory.js');
+const isAuth = require('../middlewares/isAuth');
+const canAccessDashboard = require('../middlewares/canAccessDashboard');
 
 const router = express.Router();
+
+router.use(isAuth, canAccessDashboard);
 
 router.get('/', monthCharged);
 router.get('/bestExp', bestExperiences);

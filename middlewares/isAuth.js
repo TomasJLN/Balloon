@@ -35,7 +35,7 @@ const isAuth = async (req, res, next) => {
         }
 
         const [user] = await connection.query(
-            `SELECT active, deleted FROM user WHERE id = ?`,
+            `SELECT active, deleted, role FROM user WHERE id = ?`,
             [tokenInfo.id]
         );
 
@@ -51,7 +51,10 @@ const isAuth = async (req, res, next) => {
             throw error;
         }
 
-        req.userAuth = tokenInfo;
+        req.userAuth = {
+            ...tokenInfo,
+            role: user[0].role,
+        };
 
         next();
     } catch (error) {

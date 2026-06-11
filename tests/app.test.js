@@ -166,37 +166,21 @@ describe('Reviews — endpoints', () => {
     });
 });
 
-// ─── Dashboard — públicos (sin auth en backend) ───────────────────────────────
+// ─── Dashboard — protegido en backend ─────────────────────────────────────────
 
-describe('Dashboard — endpoints públicos', () => {
-    test('GET /dashboard devuelve 200', async () => {
+describe('Dashboard — endpoints protegidos', () => {
+    test('GET /dashboard sin auth devuelve 401', async () => {
         const res = await request(app).get('/dashboard');
-        expect(res.statusCode).toBe(200);
-        expect(res.body.status).toBe('ok');
+        expect(res.statusCode).toBe(401);
+        expect(res.body.status).toBe('error');
     });
 
-    test('GET /dashboard/bestExp devuelve 200', async () => {
-        const res = await request(app).get('/dashboard/bestExp');
-        expect(res.statusCode).toBe(200);
-        expect(res.body.status).toBe('ok');
-    });
-
-    test('GET /dashboard/totalUsers devuelve 200', async () => {
-        const res = await request(app).get('/dashboard/totalUsers');
-        expect(res.statusCode).toBe(200);
-        expect(res.body.status).toBe('ok');
-    });
-
-    test('GET /dashboard/monthlyRevenue devuelve 200', async () => {
-        const res = await request(app).get('/dashboard/monthlyRevenue');
-        expect(res.statusCode).toBe(200);
-        expect(res.body.status).toBe('ok');
-    });
-
-    test('GET /dashboard/bookingsByCategory devuelve 200', async () => {
-        const res = await request(app).get('/dashboard/bookingsByCategory');
-        expect(res.statusCode).toBe(200);
-        expect(res.body.status).toBe('ok');
+    test('GET /dashboard con token inválido devuelve 401', async () => {
+        const res = await request(app)
+            .get('/dashboard')
+            .set('Authorization', 'Bearer token-invalido');
+        expect(res.statusCode).toBe(401);
+        expect(res.body.status).toBe('error');
     });
 });
 
@@ -389,5 +373,14 @@ describe('Viewer role — acceso de solo lectura (requiere seedDemo)', () => {
         expect(res.statusCode).toBe(200);
         expect(res.body.status).toBe('ok');
         expect(res.body.data).toHaveProperty('role', 'viewer');
+    });
+
+    test('GET /dashboard con token viewer devuelve 200', async () => {
+        if (!viewerToken) return;
+        const res = await request(app)
+            .get('/dashboard')
+            .set('Authorization', viewerToken);
+        expect(res.statusCode).toBe(200);
+        expect(res.body.status).toBe('ok');
     });
 });
