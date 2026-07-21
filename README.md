@@ -1,29 +1,27 @@
 # Balloon Experiences
 
-**Balloon Experiences** es una aplicación full-stack para descubrir experiencias,
-reservarlas, consultar códigos QR de entrada, valorar actividades y administrar el
-catálogo desde un dashboard.
+**Balloon Experiences** es una aplicación full-stack académica para demostrar la
+exploración y reserva simulada de experiencias, junto con la administración del
+catálogo desde un dashboard de solo lectura en su despliegue público.
 
 El proyecto está dividido en dos aplicaciones:
 
-- **Backend**: API REST con Node.js, Express 5 y MySQL, ubicada en `Balloon_RENEW`.
+- **Backend**: API REST con Node.js, Express 5 y MySQL, ubicada en `Balloon`.
 - **Frontend**: SPA React, ubicada en `../Balloon_Front`, que consume la API.
 
 ## Estado actual
 
-- Registro de usuario simplificado: `POST /user` crea la cuenta activa y devuelve
-  un JWT. El frontend guarda el token y redirige a la landing sin requerir email
-  de activación.
+- Acceso público mediante cuentas ficticias `@demo.com`, sin registro de usuarios
+  ni introducción de datos personales.
 - Protección anti-abuso en registro con rate limit por IP, rate limit por email
   y límite máximo de usuarios.
-- Login, recuperación y reseteo de contraseña.
+- Login automático con la cuenta ficticia de María López.
 - Listado y filtrado de experiencias por texto, categoría, ubicación, precio,
   fechas y destacados.
 - Vista de experiencia renovada con imagen, datos clave, precio, disponibilidad,
   checkout, mapa y experiencias relacionadas.
-- Reservas con generación de QR por participante.
-- Visualización robusta de QR al volver a una reserva.
-- Sección de valoración rediseñada y alineada con el estilo visual del site.
+- Reservas simuladas en la sesión e histórico ficticio determinista.
+- Visualización de QR demostrativos sin validez comercial ni contractual.
 - Mapa de "Cómo llegar" con marcador de globo HTML/CSS.
 - Dashboard para roles `admin` y `viewer`, con métricas, gráficos y gestión.
 - Tour de demostración interactivo activado desde la landing.
@@ -33,15 +31,14 @@ El proyecto está dividido en dos aplicaciones:
 
 ## Requisitos
 
-- Node.js 14 o superior
+- Node.js 18 o superior
 - MySQL 5.7 o superior
 - npm
-- Cuenta o clave de SendGrid para emails de recuperación y notificaciones
 
 ## Estructura
 
 ```text
-Balloon_RENEW/
+Balloon/
   app.js
   index.js
   controllers/
@@ -66,14 +63,12 @@ Balloon_RENEW/
 
 ### Backend
 
-En `Balloon_RENEW`:
+En `Balloon`:
 
 ```bash
 npm install
 cp .env.example .env
-npm run db
-npm run populateData
-npm run seedDemo
+npm run setup
 npm run dev
 ```
 
@@ -83,14 +78,15 @@ En PowerShell puedes sustituir `cp` por `Copy-Item`:
 Copy-Item .env.example .env
 ```
 
-Si necesitas crear la base de datos desde cero, usa también:
+`npm run setup` crea la base de datos, sus tablas, el catálogo inicial y los
+datos ficticios. Para regenerar únicamente las cuentas y reservas demo usa:
 
 ```bash
-npm run createDB
+npm run seedDemo
 ```
 
 El backend usa por defecto MySQL con la base `balloon_db`. Revisa `.env.example`
-para configurar puerto, credenciales de base de datos, `SECRET` JWT y SendGrid.
+para configurar puerto, credenciales de base de datos y `SECRET` JWT.
 
 Si despliegas detrás de proxy o balanceador, configura `TRUST_PROXY` con el
 número de saltos de confianza para que el rate limit detecte bien la IP real.
@@ -99,6 +95,25 @@ El registro público tiene un cupo máximo configurable de usuarios normales:
 
 ```env
 MAX_USER_ACCOUNTS=50
+```
+
+El despliegue académico funciona en modo demostración por defecto. En este
+modo solo pueden iniciar sesión las cuentas ficticias `@demo.com` y la API
+bloquea registros, cambios de perfil, newsletter, reservas y reseñas:
+
+```env
+DEMO_MODE=true
+```
+
+Establecer `DEMO_MODE=false` reactiva esas escrituras únicamente para un
+entorno privado de desarrollo.
+
+Antes de publicar una base de datos que haya aceptado registros reales, puede
+eliminarse todo usuario normal que no pertenezca al dominio ficticio
+`@demo.com`, junto con sus reservas, QR, reseñas y avatares asociados:
+
+```bash
+node database/purgePersonalDataForDemo.js --confirm
 ```
 
 ### Frontend
@@ -120,10 +135,11 @@ Copy-Item .env_example .env
 Variable principal del frontend:
 
 ```env
-REACT_APP_BACKEND_URL=http://localhost:4000
+VITE_BACKEND_URL=http://localhost:4000
 ```
 
-La SPA se sirve normalmente en `http://localhost:3000`.
+La SPA se sirve normalmente en `http://localhost:3000`, según la configuración
+de Vite incluida en el proyecto.
 
 ## Scripts Backend
 
@@ -131,9 +147,7 @@ La SPA se sirve normalmente en `http://localhost:3000`.
 |---|---|
 | `npm start` | Arranca la API con Node |
 | `npm run dev` | Arranca la API con nodemon |
-| `npm run createDB` | Crea la base de datos |
-| `npm run db` | Crea o recrea tablas |
-| `npm run populateData` | Carga categorías y experiencias de ejemplo |
+| `npm run setup` | Crea la base, tablas, catálogo y datos demo |
 | `npm run seedDemo` | Carga usuarios, reservas y reseñas demo |
 | `npm test` | Ejecuta tests Jest/Supertest |
 
@@ -141,16 +155,18 @@ La SPA se sirve normalmente en `http://localhost:3000`.
 
 | Comando | Descripción |
 |---|---|
-| `npm start` | Arranca React en desarrollo |
+| `npm start` | Arranca Vite en desarrollo |
+| `npm run dev` | Arranca Vite en desarrollo |
 | `npm run build` | Genera build de producción |
-| `npm test` | Ejecuta tests de React |
+| `npm run preview` | Sirve localmente el build de producción |
+| `npm test` | Ejecuta tests Vitest del frontend |
 
 ## Roles
 
 | Rol | Capacidades |
 |---|---|
-| `user` | Explorar, reservar, ver QR, cancelar reservas y valorar experiencias |
-| `admin` | Gestión completa de categorías, experiencias y usuarios |
+| `user` | Explorar, simular reservas y consultar histórico y QR ficticios |
+| `admin` | Gestión del catálogo solo con `DEMO_MODE=false` en entorno privado |
 | `viewer` | Acceso de solo lectura al dashboard; no ve emails ni modifica datos |
 
 El rol `viewer` puede navegar por todas las secciones del dashboard y acceder al

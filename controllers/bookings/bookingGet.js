@@ -26,7 +26,7 @@ const bookingGet = async (req, res, next) => {
             }
 
             [booking] = await connection.query(
-                `SELECT b.id, b.idExperience, b.idUser, b.ticket, b.expired, b.createdAt, be.dateExperience, e.title, e.description, e.location, e.photo from booking AS b
+                `SELECT b.id, b.idExperience, b.idUser, b.ticket, b.expired, b.createdAt, be.dateExperience, be.quantity, be.totalPrice, e.title, e.description, e.location, e.photo from booking AS b
                 LEFT JOIN booking_experience as be ON b.id = be.idBooking
                 LEFT JOIN experience as e ON e.id = b.idExperience WHERE b.ticket = ?`,
                 [ticketBooking]
@@ -41,7 +41,7 @@ const bookingGet = async (req, res, next) => {
             }
         } else {
             [booking] = await connection.query(
-                `SELECT b.id, b.idExperience, b.idUser, b.ticket, b.expired, b.createdAt, be.dateExperience, e.title, e.description, e.location, e.photo from booking AS b
+                `SELECT b.id, b.idExperience, b.idUser, b.ticket, b.expired, b.createdAt, be.dateExperience, be.quantity, be.totalPrice, e.title, e.description, e.location, e.photo from booking AS b
                 LEFT JOIN booking_experience as be ON b.id = be.idBooking
                 LEFT JOIN experience as e ON e.id = b.idExperience
                 WHERE b.idUser = ?`,

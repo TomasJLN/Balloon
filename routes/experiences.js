@@ -12,11 +12,12 @@ const {
 const { experienceFeatured } = require('../filters');
 
 const isAuth = require('../middlewares/isAuth');
+const { demoWriteDisabled } = require('../middlewares/demoMode');
 
 const router = express.Router();
 
 // Crear nueva experiencia (requiere autenticación con rol de administrador)
-router.post('/', isAuth, experienceNew);
+router.post('/', demoWriteDisabled, isAuth, experienceNew);
 
 // Listar todas las experiencias activas
 router.get('/list', experienceList);
@@ -25,13 +26,13 @@ router.get('/list', experienceList);
 router.get('/featured', experienceFeatured);
 
 // Subir/actualizar foto de experiencia (requiere autenticación)
-router.put('/:idExperience/photo', isAuth, experiencePhotoUpload);
+router.put('/:idExperience/photo', demoWriteDisabled, isAuth, experiencePhotoUpload);
 
 // Actualizar una experiencia (requiere autenticación)
-router.put('/:idExperience', isAuth, experienceEdit);
+router.put('/:idExperience', demoWriteDisabled, isAuth, experienceEdit);
 
 // Eliminar (desactivar) una experiencia (requiere autenticación)
-router.delete('/:idExperience', isAuth, experienceDelete);
+router.delete('/:idExperience', demoWriteDisabled, isAuth, experienceDelete);
 
 // Obtener los datos de una experiencia
 router.get('/:idExperience', experienceGet);

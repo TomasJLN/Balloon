@@ -19,6 +19,12 @@ const DEMO_USERS = [
 
 // Reservas por mes (índice 0 = mes actual, índice 6 = hace 6 meses)
 const MONTHLY_BOOKINGS = [6, 10, 14, 11, 8, 5, 3];
+const MARIA_BOOKINGS = [
+    { daysFromToday: -150, experienceIndex: 0, quantity: 2 },
+    { daysFromToday: -75, experienceIndex: 1, quantity: 1 },
+    { daysFromToday: -20, experienceIndex: 2, quantity: 3 },
+    { daysFromToday: 21, experienceIndex: 3, quantity: 2 },
+];
 
 const REVIEW_TEXTS = [
     '¡Experiencia increíble! Lo repetiría sin dudarlo.',
@@ -42,6 +48,13 @@ function dateInMonth(monthsAgo, day) {
     d.setDate(Math.min(day, 28)); // evita desbordamiento de mes
     d.setHours(rand(9, 20), 0, 0, 0);
     return d.toISOString().slice(0, 19).replace('T', ' ');
+}
+
+function dateFromToday(daysFromToday, hour = 11) {
+    const date = new Date();
+    date.setDate(date.getDate() + daysFromToday);
+    date.setHours(hour, 0, 0, 0);
+    return date.toISOString().slice(0, 19).replace('T', ' ');
 }
 
 async function seedDemoData() {
@@ -96,7 +109,7 @@ async function seedDemoData() {
             console.log('  → Sin datos demo previos');
         }
 
-        // Asegura que el ENUM de 'role' incluye 'viewer' (por si no se ejecutó npm run db)
+        // Asegura que el ENUM de 'role' incluye 'viewer' en instalaciones previas.
         await connection.query(`
             ALTER TABLE user
             MODIFY COLUMN role ENUM('admin', 'user', 'viewer') DEFAULT 'user' NOT NULL
@@ -129,13 +142,46 @@ async function seedDemoData() {
             `SELECT id, price FROM experience WHERE active = 1`
         );
         if (!experiences.length) {
-            console.error('No hay experiencias. Ejecuta primero: npm run populate');
+            console.error('No hay experiencias. Ejecuta primero: npm run setup');
             return;
         }
 
         // --- Reservas distribuidas en los últimos 6 meses ---
         const bookingExpByExpId = {};
+        const mariaBookingExperienceIds = [];
         let ticketNum = 2000;
+
+        // La cuenta usada por el acceso público siempre dispone de un historial
+        // útil y de una reserva futura, independientemente del reparto aleatorio.
+        for (let index = 0; index < MARIA_BOOKINGS.length; index++) {
+            const fixture = MARIA_BOOKINGS[index];
+            const exp = experiences[fixture.experienceIndex % experiences.length];
+            const total = parseFloat((exp.price * fixture.quantity).toFixed(2));
+            const ticket = `DEMO-MARIA-${String(index + 1).padStart(2, '0')}`;
+
+            const [bookingRes] = await connection.query(
+                `INSERT INTO booking (idExperience, idUser, ticket, expired, createdAt)
+                 VALUES (?, ?, ?, 0, NOW())`,
+                [exp.id, userIds[0], ticket],
+            );
+            const [beRes] = await connection.query(
+                `INSERT INTO booking_experience
+                    (dateExperience, quantity, totalPrice, idBooking, idExperience, idUser)
+                 VALUES (?, ?, ?, ?, ?, ?)`,
+                [
+                    dateFromToday(fixture.daysFromToday, 10 + index),
+                    fixture.quantity,
+                    total,
+                    bookingRes.insertId,
+                    exp.id,
+                    userIds[0],
+                ],
+            );
+
+            if (!bookingExpByExpId[exp.id]) bookingExpByExpId[exp.id] = [];
+            bookingExpByExpId[exp.id].push(beRes.insertId);
+            mariaBookingExperienceIds.push(beRes.insertId);
+        }
 
         for (let monthsAgo = 6; monthsAgo >= 0; monthsAgo--) {
             const count = MONTHLY_BOOKINGS[monthsAgo];
@@ -169,23 +215,37 @@ async function seedDemoData() {
         console.log(`✓ ${totalBookings} reservas demo creadas`);
 
         // --- Reseñas para las experiencias más reservadas ---
+        const reviewedBookingExperienceIds = new Set();
+        for (let index = 0; index < mariaBookingExperienceIds.length - 1; index++) {
+            const bookingExperienceId = mariaBookingExperienceIds[index];
+            await connection.query(
+                `INSERT INTO review (idBookingExperience, description, score, voted, createdAt)
+                 VALUES (?, ?, ?, 1, NOW())`,
+                [bookingExperienceId, REVIEW_TEXTS[index], 88 + index * 3],
+            );
+            reviewedBookingExperienceIds.add(bookingExperienceId);
+        }
+
         const topExps = Object.entries(bookingExpByExpId)
             .sort((a, b) => b[1].length - a[1].length)
             .slice(0, 8);
 
         let reviewCount = 0;
         for (const [, beIds] of topExps) {
-            const numReviews = Math.min(rand(2, 5), beIds.length);
+            const availableBeIds = beIds.filter(
+                (id) => !reviewedBookingExperienceIds.has(id),
+            );
+            const numReviews = Math.min(rand(2, 5), availableBeIds.length);
             for (let i = 0; i < numReviews; i++) {
                 await connection.query(
                     `INSERT INTO review (idBookingExperience, description, score, voted, createdAt)
                      VALUES (?, ?, ?, 1, NOW())`,
-                    [beIds[i], pick(REVIEW_TEXTS), rand(65, 100)]
+                    [availableBeIds[i], pick(REVIEW_TEXTS), rand(65, 100)]
                 );
                 reviewCount++;
             }
         }
-        console.log(`✓ ${reviewCount} reseñas demo creadas`);
+        console.log(`✓ ${reviewCount + reviewedBookingExperienceIds.size} reseñas demo creadas`);
 
         console.log('\n✅ ¡Demo data lista!');
         console.log('   Usuarios: cualquier email @demo.com  |  Contraseña: Demo1234!');

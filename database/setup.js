@@ -24,6 +24,12 @@ const DEMO_USERS = [
 ];
 
 const MONTHLY_BOOKINGS = [6, 10, 14, 11, 8, 5, 3];
+const MARIA_BOOKINGS = [
+    { daysFromToday: -150, experienceIndex: 0, quantity: 2 },
+    { daysFromToday: -75, experienceIndex: 1, quantity: 1 },
+    { daysFromToday: -20, experienceIndex: 2, quantity: 3 },
+    { daysFromToday: 21, experienceIndex: 3, quantity: 2 },
+];
 
 const REVIEW_TEXTS = [
     '¡Experiencia increíble! Lo repetiría sin dudarlo.',
@@ -47,6 +53,13 @@ function dateInMonth(monthsAgo, day) {
     d.setDate(Math.min(day, 28));
     d.setHours(rand(9, 20), 0, 0, 0);
     return d.toISOString().slice(0, 19).replace('T', ' ');
+}
+
+function dateFromToday(daysFromToday, hour = 11) {
+    const date = new Date();
+    date.setDate(date.getDate() + daysFromToday);
+    date.setHours(hour, 0, 0, 0);
+    return date.toISOString().slice(0, 19).replace('T', ' ');
 }
 
 // ─── Setup principal ─────────────────────────────────────────────────────────
@@ -295,7 +308,26 @@ async function setup() {
         // Reservas
         const [experiences] = await connection.query(`SELECT id, price FROM experience WHERE active = 1`);
         const bookingExpByExpId = {};
+        const mariaBookingExperienceIds = [];
         let ticketNum = 2000;
+
+        for (let index = 0; index < MARIA_BOOKINGS.length; index++) {
+            const fixture = MARIA_BOOKINGS[index];
+            const exp = experiences[fixture.experienceIndex % experiences.length];
+            const total = parseFloat((exp.price * fixture.quantity).toFixed(2));
+            const ticket = `DEMO-MARIA-${String(index + 1).padStart(2, '0')}`;
+            const [bookingRes] = await connection.query(
+                `INSERT INTO booking (idExperience, idUser, ticket, expired, createdAt) VALUES (?, ?, ?, 0, NOW())`,
+                [exp.id, userIds[0], ticket],
+            );
+            const [beRes] = await connection.query(
+                `INSERT INTO booking_experience (dateExperience, quantity, totalPrice, idBooking, idExperience, idUser) VALUES (?, ?, ?, ?, ?, ?)`,
+                [dateFromToday(fixture.daysFromToday, 10 + index), fixture.quantity, total, bookingRes.insertId, exp.id, userIds[0]],
+            );
+            if (!bookingExpByExpId[exp.id]) bookingExpByExpId[exp.id] = [];
+            bookingExpByExpId[exp.id].push(beRes.insertId);
+            mariaBookingExperienceIds.push(beRes.insertId);
+        }
 
         for (let monthsAgo = 6; monthsAgo >= 0; monthsAgo--) {
             const count = MONTHLY_BOOKINGS[monthsAgo];
@@ -321,19 +353,30 @@ async function setup() {
         }
 
         // Reseñas
+        const reviewedBookingExperienceIds = new Set();
+        for (let index = 0; index < mariaBookingExperienceIds.length - 1; index++) {
+            const bookingExperienceId = mariaBookingExperienceIds[index];
+            await connection.query(
+                `INSERT INTO review (idBookingExperience, description, score, voted, createdAt) VALUES (?, ?, ?, 1, NOW())`,
+                [bookingExperienceId, REVIEW_TEXTS[index], 88 + index * 3],
+            );
+            reviewedBookingExperienceIds.add(bookingExperienceId);
+        }
+
         const topExps = Object.entries(bookingExpByExpId).sort((a, b) => b[1].length - a[1].length).slice(0, 8);
         let reviewCount = 0;
         for (const [, beIds] of topExps) {
-            const numReviews = Math.min(rand(2, 5), beIds.length);
+            const availableBeIds = beIds.filter((id) => !reviewedBookingExperienceIds.has(id));
+            const numReviews = Math.min(rand(2, 5), availableBeIds.length);
             for (let i = 0; i < numReviews; i++) {
                 await connection.query(
                     `INSERT INTO review (idBookingExperience, description, score, voted, createdAt) VALUES (?, ?, ?, 1, NOW())`,
-                    [beIds[i], pick(REVIEW_TEXTS), rand(65, 100)]
+                    [availableBeIds[i], pick(REVIEW_TEXTS), rand(65, 100)]
                 );
                 reviewCount++;
             }
         }
-        console.log(`      ✓ ${Object.values(bookingExpByExpId).flat().length} reservas y ${reviewCount} reseñas`);
+        console.log(`      ✓ ${Object.values(bookingExpByExpId).flat().length} reservas y ${reviewCount + reviewedBookingExperienceIds.size} reseñas`);
 
         console.log('\n✅ Setup completado.\n');
         console.log('   Admin:  ' + ADMIN_EMAIL + ' / ' + ADMIN_PASSWORD);

@@ -6,11 +6,12 @@ const {
 } = require('../controllers/newsletter');
 
 const router = express.Router();
+const { demoWriteDisabled } = require('../middlewares/demoMode');
 
 // Suscribir a newsletter
-router.post('/', newsletterNew);
+router.post('/', demoWriteDisabled, newsletterNew);
 
 // Dar de baja de newsletter
-router.delete('/', newsletterDelete);
+router.delete('/', demoWriteDisabled, newsletterDelete);
 
 module.exports = router;

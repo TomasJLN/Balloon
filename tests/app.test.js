@@ -1,5 +1,7 @@
 'use strict';
 
+process.env.DEMO_MODE = 'false';
+
 const request = require('supertest');
 const app = require('../app');
 

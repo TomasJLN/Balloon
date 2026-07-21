@@ -10,11 +10,12 @@ const {
 
 const isAuth = require('../middlewares/isAuth');
 const bookingExists = require('../middlewares/bookingExists');
+const { demoWriteDisabled } = require('../middlewares/demoMode');
 
 const router = express.Router();
 
 // Crear nueva reserva (requiere autenticación)
-router.post('/', isAuth, bookingNew);
+router.post('/', demoWriteDisabled, isAuth, bookingNew);
 
 // Listar todas las reservas activas (requiere autenticación de administrador)
 router.get('/list', isAuth, bookingList);
@@ -29,6 +30,6 @@ router.get('/view/qr/:idBooking', isAuth, bookingGetQR);
 router.get('/view', isAuth, bookingGet);
 
 // Cancelar una reserva a partir del número de ticket (requiere autenticación)
-router.delete('/:ticketNumber', isAuth, bookingExists, bookingCancel);
+router.delete('/:ticketNumber', demoWriteDisabled, isAuth, bookingExists, bookingCancel);
 
 module.exports = router;
