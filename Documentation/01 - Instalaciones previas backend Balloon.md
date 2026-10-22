@@ -41,11 +41,16 @@
 
 ### Pasos para la instalación de NodeJS en Ubuntu:
 
-1. `sudo apt update`
+El backend necesita Node.js 20.9 o superior (recomendado 24). La versión de `apt`
+en Ubuntu suele ser más antigua, así que se instala con _nvm_:
 
-2. `sudo apt install nodejs `
+1. `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash`
 
-3. `sudo apt install npm`
+2. Cerrar y volver a abrir la terminal (o `source ~/.bashrc`)
+
+3. `nvm install 24`
+
+4. Comprobar la versión: `node -v`
 
 ### Pasos para la configuración de la api de sendgrid:
 

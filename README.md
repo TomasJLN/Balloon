@@ -150,6 +150,27 @@ de Vite incluida en el proyecto.
 | `npm run setup` | Crea la base, tablas, catálogo y datos demo |
 | `npm run seedDemo` | Carga usuarios, reservas y reseñas demo |
 | `npm test` | Ejecuta tests Jest/Supertest |
+| `bash scripts/deploy.sh` | Despliega backend y frontend en el servidor (ver abajo) |
+
+## Despliegue
+
+En el servidor, con `Balloon` y `Balloon_Front` en la misma carpeta y el backend
+gestionado por PM2 con el nombre `balloon`, ejecuta con el usuario dueño de PM2:
+
+```bash
+bash scripts/deploy.sh
+```
+
+Hace `git pull` en ambos repositorios y, solo en los que han cambiado:
+
+- **Backend**: `npm ci --omit=dev`, comprueba que cargan los módulos nativos
+  (`bcrypt`, `sharp`), `pm2 restart balloon` y espera a que la API responda.
+- **Frontend**: `npm ci` y `npm run build`; si la compilación falla restaura el
+  build anterior para no dejar la web sin ficheros.
+
+Opciones: `--force` (reinstala y reinicia aunque no haya cambios), `--solo-back`,
+`--solo-front`. Variables: `BALLOON_PM2_APP`, `BALLOON_FRONT_DIR`,
+`BALLOON_NODE_VERSION`.
 
 ## Scripts Frontend
 
