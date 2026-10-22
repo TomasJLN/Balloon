@@ -47,39 +47,42 @@ const bookingNew = async (req, res, next) => {
             throw error;
         }
 
-        const ticket = getRandomString(3);
+        // 8 bytes = 16 caracteres hex (columnas: ticket VARCHAR(20), qrPicture VARCHAR(50))
+        const ticket = getRandomString(8);
 
         let codesQR = [];
         for (let i = 0; i < quantity; i++) {
-            codesQR.push(getRandomString(3));
-        }
-
-        let getPlaces = await connection.query(
-            `SELECT IFNULL(SUM(quantity),0) FROM booking_experience WHERE idExperience = ? AND dateExperience = ?`,
-            [idExperience, dateExperience]
-        );
-
-        getPlaces = Number(Object.values(getPlaces[0][0]));
-
-        let totPlaces = await connection.query(
-            `SELECT totalPlaces FROM experience WHERE id = ?`,
-            [idExperience]
-        );
-
-        totPlaces = Number(Object.values(totPlaces[0][0]));
-
-        if (totPlaces < getPlaces + quantity) {
-            const error = new Error(
-                `No hay plazas suficientes: ${totPlaces - getPlaces - quantity}`
-            );
-            error.httpStatus = 401;
-            throw error;
+            codesQR.push(getRandomString(8));
         }
 
         // Iniciar transacción para garantizar consistencia
         await connection.beginTransaction();
 
         try {
+            // FOR UPDATE bloquea la experiencia hasta el commit para que dos
+            // reservas simultáneas no puedan superar las plazas disponibles
+            let totPlaces = await connection.query(
+                `SELECT totalPlaces FROM experience WHERE id = ? FOR UPDATE`,
+                [idExperience]
+            );
+
+            totPlaces = Number(Object.values(totPlaces[0][0]));
+
+            let getPlaces = await connection.query(
+                `SELECT IFNULL(SUM(quantity),0) FROM booking_experience WHERE idExperience = ? AND dateExperience = ?`,
+                [idExperience, dateExperience]
+            );
+
+            getPlaces = Number(Object.values(getPlaces[0][0]));
+
+            if (totPlaces < getPlaces + quantity) {
+                const error = new Error(
+                    `No hay plazas suficientes: ${totPlaces - getPlaces - quantity}`
+                );
+                error.httpStatus = 401;
+                throw error;
+            }
+
             const [bookingResult] = await connection.query(
                 `INSERT INTO booking (idExperience, idUser, ticket) VALUES (?, ?, ?)`,
                 [idExperience, idReqUser, ticket]

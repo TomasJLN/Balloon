@@ -9,7 +9,9 @@ const bookingExists = async (req, res, next) => {
 
         const { ticketNumber } = req.params;
         const [reviewCheck] = await connection.query(
-            `SELECT booking_experience.id FROM booking_experience, booking WHERE booking.ticket = ?`,
+            `SELECT booking_experience.id FROM booking
+            INNER JOIN booking_experience ON booking.id = booking_experience.idBooking
+            WHERE booking.ticket = ?`,
             [ticketNumber]
         );
 

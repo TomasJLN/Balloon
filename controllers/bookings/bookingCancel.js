@@ -96,7 +96,7 @@ const bookingCancel = async (req, res, next) => {
         bodyText += `</div>`;
 
         await sendMail({
-            to,
+            to: to[0].email,
             subject: `Cancelación Reserva Nº ${dataBooking.ticket} en Balloon 🎈`,
             body: bodyText,
         });
