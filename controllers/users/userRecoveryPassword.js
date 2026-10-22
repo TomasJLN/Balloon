@@ -40,8 +40,6 @@ const userRecoveryPassword = async (req, res, next) => {
             UPDATE user SET recoveryCode = ?, modifiedAt = now() WHERE email = ?`,
                 [recoveryCode, email],
             );
-
-            console.log(recoveryCode);
         }
 
         res.send({
