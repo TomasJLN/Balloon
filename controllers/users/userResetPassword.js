@@ -19,6 +19,12 @@ const userResetPassword = async (req, res, next) => {
             throw error;
         }
 
+        if (typeof recoveryCode !== 'string' || typeof newPassword !== 'string') {
+            const error = new Error('Parámetros con formato no válido');
+            error.httpStatus = 400;
+            throw error;
+        }
+
         const [user] = await connection.query(
             'SELECT id FROM user WHERE recoveryCode = ?',
             [recoveryCode]

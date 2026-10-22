@@ -17,6 +17,8 @@ const getDB = async () => {
             password: MYSQL_PASSWORD,
             database: MYSQL_DATABASE,
             timezone: 'Z',
+            // Evita que un objeto JSON en un `?` se expanda a `clave` = valor
+            stringifyObjects: true,
         });
     }
 

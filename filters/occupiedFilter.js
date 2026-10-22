@@ -21,15 +21,34 @@ const occupiedFilter = async (req, res, next) => {
 
         let query = `SELECT category.title AS category, experience.title, booking_experience.dateExperience, SUM(booking_experience.quantity) AS occupied, experience.totalPlaces, experience.location FROM experience right join booking_experience ON booking_experience.idExperience = experience.id left join category ON category.id = experience.idCategory WHERE experience.active=1`;
 
-        if (date) query += ` AND booking_experience.dateExperience = '${date}'`;
+        const values = [];
 
-        if (experienceID) query += ` AND experience.id = ${experienceID}`;
+        if (date) {
+            // El front envía YYYY/MM/DD (DateObject.format); también aceptamos YYYY-MM-DD
+            if (typeof date !== 'string' || !/^\d{4}[-/]\d{2}[-/]\d{2}/.test(date)) {
+                const error = new Error('date debe tener formato YYYY-MM-DD');
+                error.httpStatus = 400;
+                throw error;
+            }
+            query += ` AND booking_experience.dateExperience = ?`;
+            values.push(String(date));
+        }
+
+        if (experienceID) {
+            if (!Number.isInteger(Number(experienceID))) {
+                const error = new Error('experienceID debe ser un número');
+                error.httpStatus = 400;
+                throw error;
+            }
+            query += ` AND experience.id = ?`;
+            values.push(Number(experienceID));
+        }
 
         query += ` GROUP BY booking_experience.dateExperience, experience.title, experience.totalPlaces,experience.location, category.title`;
 
         query += ` ${queryOrder}`;
 
-        const [list] = await connection.query(`${query}`);
+        const [list] = await connection.query(query, values);
 
         res.send({
             status: 'ok',

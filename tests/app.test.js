@@ -120,6 +120,30 @@ describe('Filters — endpoints públicos', () => {
         expect(res.body.status).toBe('ok');
     });
 
+    test('GET /filters/occupied rechaza experienceID no numérico (SQLi)', async () => {
+        const res = await request(app)
+            .get('/filters/occupied')
+            .query({ experienceID: '1 OR 1=1' });
+        expect(res.statusCode).toBe(400);
+        expect(res.body.status).toBe('error');
+    });
+
+    test('GET /filters/occupied rechaza date con SQL inyectado', async () => {
+        const res = await request(app)
+            .get('/filters/occupied')
+            .query({ date: "' OR '1'='1" });
+        expect(res.statusCode).toBe(400);
+        expect(res.body.status).toBe('error');
+    });
+
+    test('GET /filters/occupied acepta el formato de fecha del front', async () => {
+        const res = await request(app)
+            .get('/filters/occupied')
+            .query({ experienceID: 1, date: '2026/10/22' });
+        expect(res.statusCode).toBe(200);
+        expect(res.body.status).toBe('ok');
+    });
+
     test('GET /filters/categories devuelve 200', async () => {
         const res = await request(app).get('/filters/categories');
         expect(res.statusCode).toBe(200);
@@ -241,6 +265,14 @@ describe('Users — autenticación y validación', () => {
     test('DELETE /user sin auth devuelve 401', async () => {
         const res = await request(app).delete('/user');
         expect(res.statusCode).toBe(401);
+    });
+
+    test('PUT /user/password/reset rechaza recoveryCode como objeto', async () => {
+        const res = await request(app)
+            .put('/user/password/reset')
+            .send({ recoveryCode: { recoveryCode: 1 }, newPassword: 'x' });
+        expect(res.statusCode).toBe(400);
+        expect(res.body.status).toBe('error');
     });
 });
 
